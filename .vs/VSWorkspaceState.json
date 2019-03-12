@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public",
+    "\\site",
+    "\\site\\vendor",
+    "\\site\\vendor\\twig",
+    "\\site\\vendor\\twig\\twig",
+    "\\site\\web"
+  ],
+  "SelectedNode": "\\site\\src",
+  "PreviewInSolutionExplorer": false
+}
