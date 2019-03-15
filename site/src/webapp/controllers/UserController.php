@@ -32,6 +32,10 @@ class UserController extends Controller
         $email = $request->post('email');
         $bio = $request->post('bio');
         $validation = new InputValidation();
+        print((string) $username);
+        print((string) $password);
+        print((string) $email);
+        print((string) $bio);
 
 
         $user = User::makeEmpty();
@@ -193,10 +197,7 @@ class UserController extends Controller
             $password = $request->post('password');
             $email = $request->post('email');
             $bio = $request->post('bio');
-            print((string) $username);
-            print((string) $password);
-            print((string) $email);
-            print((string) $bio);
+
 
             $isAdmin = ($request->post('isAdmin') != null);
             
