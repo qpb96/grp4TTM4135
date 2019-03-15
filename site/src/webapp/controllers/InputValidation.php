@@ -8,11 +8,11 @@ use Slim\Middleware\Flash;
         function validUserName($username)
         {
             if($username == null){
-                $this->app->flash("Username field can't be empty");
                 return FALSE; 
             }
-            else
+            else{
                 return TRUE;
+            }
 
 
         }
