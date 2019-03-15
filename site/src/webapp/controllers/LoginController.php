@@ -33,7 +33,7 @@ class LoginController extends Controller
         $password = $request->post('password');
         $this->validation = new InputValidation();
 
-        if($this->validation->validUserName($username) == TRUE)){ #&& $this->validation->validPassword($password)){
+        if($this->validation->validUserName($username) == TRUE){ #&& $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 $_SESSION['userid'] = $user->getId();
@@ -44,10 +44,10 @@ class LoginController extends Controller
                 $this->render('login.twig', []);
             }
         }
-        else
-        $this->app->flash("error", "Invalid input in username or password");
-        $this->render('login.twig', []);
-        
+        else{
+            $this->app->flash("error", "Invalid input in username or password");
+            $this->render('login.twig', []);            
+        }
 
 
     }
