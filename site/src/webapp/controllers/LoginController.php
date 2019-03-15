@@ -3,12 +3,16 @@
 namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
+use ttm4135\webapp\controllers\InputValidation;
 
 class LoginController extends Controller
 {
+    private $validation = new InputValidation();
+
     function __construct()
     {
         parent::__construct();
+        
     }
 
     function index()
@@ -27,16 +31,20 @@ class LoginController extends Controller
         $request = $this->app->request;
         $username = $request->post('username');
         $password = $request->post('password');
-
-        if ( Auth::checkCredentials($username, $password) ) {
-            $user = User::findByUser($username);
-            $_SESSION['userid'] = $user->getId();
-            $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
-            $this->app->redirect('/');
-        } else {
-            $this->app->flashNow('error', 'Incorrect username/password combination.');
-            $this->render('login.twig', []);
+        if($this->validation->checkUserName($username) == TRUE){
+            if ( Auth::checkCredentials($username, $password) ) {
+                $user = User::findByUser($username);
+                $_SESSION['userid'] = $user->getId();
+                $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
+                $this->app->redirect('/');
+            } else {
+                $this->app->flashNow('error', 'Incorrect username/password combination.');
+                $this->render('login.twig', []);
+            }
         }
+        
+
+
     }
 
     function logout()
