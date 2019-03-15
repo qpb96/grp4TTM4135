@@ -7,7 +7,7 @@ use Slim\Middleware\Flash;
     class InputValidation {
         function validUserName($username)
         {
-            if(username == null){
+            if($username == null){
                 $this->app->flash("Username field can't be empty");
                 return FALSE; 
             }
