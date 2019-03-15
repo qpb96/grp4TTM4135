@@ -16,15 +16,15 @@
 
         }
 
-        function validPassword($password){
-            if($password == null || strlen($password)>20){
-                return FALSE;
-            }
-            else{
-                return TRUE;
-            }
+ #       function validPassword($password){
+ ##           if($password == null || strlen($password)>20){
+ #               return FALSE;
+ #           }
+ #           else{
+ #               return TRUE;
+ #           }
             
-        }
+ #       }
 //NOT NULL
 //Max 20 characters
 //Valid email format, The FILTER_VALIDATE_EMAIL filter validates an e-mail address.
