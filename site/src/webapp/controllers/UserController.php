@@ -32,10 +32,7 @@ class UserController extends Controller
         $email = $request->post('email');
         $bio = $request->post('bio');
         $validation = new InputValidation();
-        print((string) $username);
-        print((string) $password);
-        print((string) $email);
-        print((string) $bio);
+
 
 
         $user = User::makeEmpty();
@@ -45,7 +42,13 @@ class UserController extends Controller
         if($validation->validEmail($email) && $validation->ValidBio($bio)
             && $validation->validUserName($username) && $validation->validPassword($password))
             {
+                $user = User::makeEmpty();
+                $user->setUsername($username);
+                $user->setPassword($password);
+                $user->setEmail($email);
+                $user->setBio($bio);
                 $user->save();
+                
                 $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
                 $this->app->redirect('/login');
             }

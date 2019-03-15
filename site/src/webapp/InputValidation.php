@@ -29,7 +29,7 @@
 //Max 20 characters
 //Valid email format, The FILTER_VALIDATE_EMAIL filter validates an e-mail address.
         function validEmail($email){
-            if(strlen($email) > 20 && $email != NULL && filter_var($email, FILTER_VALIDATE_EMAIL)){
+            if(strlen($email) < 20 && $email != NULL && filter_var($email, FILTER_VALIDATE_EMAIL)){
                 return TRUE;
             }
             return FALSE;
