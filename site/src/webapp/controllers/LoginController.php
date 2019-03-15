@@ -7,7 +7,7 @@ use ttm4135\webapp\controllers\InputValidation;
 
 class LoginController extends Controller
 {
-    private $validation = new InputValidation();
+    protected $validation;
 
     function __construct()
     {
@@ -31,7 +31,9 @@ class LoginController extends Controller
         $request = $this->app->request;
         $username = $request->post('username');
         $password = $request->post('password');
-        if($this->validation->checkUserName($username) == TRUE){
+        $validation = new InputValidation();
+        
+        if($this->validation->validUserName($username) == TRUE){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 $_SESSION['userid'] = $user->getId();
