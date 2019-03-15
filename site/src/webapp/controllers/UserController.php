@@ -4,6 +4,7 @@ namespace ttm4135\webapp\controllers;
 
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
+use ttm4135\webapp\InputValidation;
 
 class UserController extends Controller
 {
@@ -28,6 +29,9 @@ class UserController extends Controller
         $request = $this->app->request;
         $username = $request->post('username');
         $password = $request->post('password');
+        $email = $request->post('email');
+        $bio = $request->post('bio');
+        $validation = new InputValidation();
 
 
         $user = User::makeEmpty();
@@ -36,13 +40,25 @@ class UserController extends Controller
 
         if($request->post('email'))
         {
-          $email = $request->post('email');
-          $user->setEmail($email);
+         #$email = $request->post('email');
+         if($validation->validEmail($email)){
+            $user->setEmail($email);
+         }
+          else{
+            $this->app->flash('error', 'Email not valid');
+            $this->app->redirect('/register');
+          }
         }
         if($request->post('bio'))
         {
-          $bio = $request->post('bio');
-          $user->setBio($bio);
+          #$bio = $request->post('bio');
+          if($validation->ValidBio($bio)){
+            $user->setBio($bio); 
+          }
+          else{
+            $this->app->flash('error', 'Bio not valid');
+            $this->app->redirect('/register');
+          }
         }
 
         

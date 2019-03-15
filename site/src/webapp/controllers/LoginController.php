@@ -3,7 +3,7 @@
 namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
-use ttm4135\webapp\controllers\InputValidation;
+use ttm4135\webapp\InputValidation;
 
 class LoginController extends Controller
 {
@@ -33,7 +33,7 @@ class LoginController extends Controller
         $password = $request->post('password');
         $this->validation = new InputValidation();
 
-        if($this->validation->validUserName($username) == TRUE){
+        if($this->validation->validUserName($username) == TRUE && $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 $_SESSION['userid'] = $user->getId();
