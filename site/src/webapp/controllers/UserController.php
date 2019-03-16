@@ -134,7 +134,7 @@ class UserController extends Controller
 
     function show($tuserid)   
     {
-        if(Auth::userAccess($tuserid))
+        if(Auth::userAccess($tuserid) && Auth::isAdmin())
         {
           $user = User::findById($tuserid);
           $this->render('showuser.twig', [
@@ -186,7 +186,7 @@ class UserController extends Controller
 
     function edit($tuserid)    
     { 
-
+        
         $user = User::findById($tuserid);
 
         if (! $user) {
