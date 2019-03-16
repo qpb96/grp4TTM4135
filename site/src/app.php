@@ -35,7 +35,6 @@ $ns ='ttm4135\\webapp\\controllers\\';
 
 Auth::updateSessionExpiration();
 
-$app->flash("info", "Dette er kult");
 
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
 

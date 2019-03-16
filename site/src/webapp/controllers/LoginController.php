@@ -4,6 +4,7 @@ namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
+use ttm4135\webapp\InputSanitizer;
 
 class LoginController extends Controller
 {
@@ -29,9 +30,11 @@ class LoginController extends Controller
     function login()
     {
         $request = $this->app->request;
-        $username = $request->post('username');
-        $password = $request->post('password');
+        $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
+        
+        $username = $input_handler->get('username');
+        $password = $input_handler->get('password');
 
         if($this->validation->validUserName($username) == TRUE && $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {

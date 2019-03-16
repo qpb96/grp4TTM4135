@@ -6,7 +6,7 @@ use ttm4135\webapp\models\User;
 
 class Auth
 {
-    const SESSION_EXPIRATION_TIME = 10;
+    const SESSION_EXPIRATION_TIME = 240;
     private static $session_expired = null;
 
     function __construct()
@@ -107,4 +107,18 @@ class Auth
         self::$session_expired = false;
     }
 }
+
+
+    static function isSessionExpired() {
+	if (self::$session_expired) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+
+    static function resetSessionExpired() {
+        self::$session_expired = false;
+        }
 }
