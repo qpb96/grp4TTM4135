@@ -88,53 +88,9 @@ class UserController extends Controller
 #        $this->app->redirect('/login');
     }
 
-    function delete($tuserid)
-    {
-        if(Auth::userAccess($tuserid))
-        {
-            $user = User::findById($tuserid);
-            $user->delete();
-            $this->app->flash('info', 'User ' . $user->getUsername() . '  with id ' . $tuserid . ' has been deleted.');
-            $this->app->redirect('/admin');
-        } else {
-            $username = Auth::user()->getUserName();
-            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-            $this->app->redirect('/');
-        }
-    }
-
-    function deleteMultiple()
-    {
-      if(Auth::isAdmin()){
-          $request = $this->app->request;
-          $userlist = $request->post('userlist'); 
-          $deleted = [];
-
-          if($userlist == NULL){
-              $this->app->flash('info','No user to be deleted.');
-          } else {
-               foreach( $userlist as $duserid)
-               {
-                    $user = User::findById($duserid);
-                    if(  $user->delete() == 1) { //1 row affect by delete, as expect..
-                      $deleted[] = $user->getId();
-                    }
-               }
-               $this->app->flash('info', 'Users with IDs  ' . implode(',',$deleted) . ' have been deleted.');
-          }
-
-          $this->app->redirect('/admin');
-      } else {
-          $username = Auth::user()->getUserName();
-          $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-          $this->app->redirect('/');
-      }
-    }
-
-
     function show($tuserid)   
     {
-        if(Auth::userAccess($tuserid) && Auth::isAdmin())
+        if(Auth::userAccess($tuserid) )
         {
           $user = User::findById($tuserid);
           $this->render('showuser.twig', [
