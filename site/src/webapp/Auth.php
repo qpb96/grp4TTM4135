@@ -82,6 +82,15 @@ class Auth
 
     }
 
+    static function updateSessionExpiration() {
+        if (isset($_SESSION['timestamp']) && time() - $_SESSION['timestamp'] > self::SESSION_EXPIRATION_TIME) {
+            if(self::check()) {
+            self::logout($expired=true);
+            }
+        }
+        $_SESSION['timestamp'] = time();
+        }
+
     //Set a session when user logs in
     static function login($user_id) {
         $_SESSION['userid'] = $user_id;
