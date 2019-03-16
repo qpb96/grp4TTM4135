@@ -89,7 +89,7 @@ class Auth
             self::logout($expired=true);
             }
         }
-        $_SESSION['time'] = time();
+        $_SESSION['timestamp'] = time();
         }
 
     //Set a session when user logs in
@@ -97,7 +97,7 @@ class Auth
         $_SESSION['userid'] = $user_id;
         }
     
-        
+
     static function logout()
     {
         if (self::check()) {
