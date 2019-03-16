@@ -36,7 +36,8 @@ class LoginController extends Controller
         if($this->validation->validUserName($username) == TRUE && $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
-                $_SESSION['userid'] = $user->getId();
+                //Set session when user logs in
+                Auth::login($user->getId());
                 $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
                 $this->app->redirect('/');
             } else {
@@ -60,4 +61,10 @@ class LoginController extends Controller
         return;
        
     }
+
+    function expired() {
+        Auth::resetSessionExpired();
+        $this->app->flash('info', 'Your session has expired. Please log in again.');
+            $this->app->redirect('/login');
+        }
 }

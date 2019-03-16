@@ -41,6 +41,9 @@ $app->get('/',     $ns . 'HomeController:index');             //front page      
 //User
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
+
+
+
 $app->post('/logout',$ns . 'LoginController:logout');  //logs out    <all users>
 $app->get('/logout', $ns . 'LoginController:logout');  //logs out    <all users>
 $app->get( '/register', $ns . 'UserController:index');     //registration form     <all visitors with valid personal cert>
