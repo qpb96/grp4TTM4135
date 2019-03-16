@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+use ttm4135\webapp\Auth;
+
 
 $templatedir =  __DIR__.'/webapp/templates/';
 $app = new \Slim\Slim([

@@ -3,7 +3,6 @@
 namespace ttm4135\webapp;
 
 use ttm4135\webapp\models\User;
-use ttm4135\webapp\Auth;
 
 class Auth
 {
