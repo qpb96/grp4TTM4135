@@ -82,13 +82,14 @@ class Auth
 
     }
 
+    //Countdown
     static function updateSessionExpiration() {
         if (isset($_SESSION['timestamp']) && time() - $_SESSION['timestamp'] > self::SESSION_EXPIRATION_TIME) {
             if(self::check()) {
             self::logout($expired=true);
             }
         }
-        $_SESSION['timestamp'] = time();
+        $_SESSION['time'] = time();
         }
 
     //Set a session when user logs in
@@ -96,13 +97,14 @@ class Auth
         $_SESSION['userid'] = $user_id;
         }
     
+        
     static function logout()
     {
         if (self::check()) {
         session_unset();
         session_destroy();	
         session_regenerate_id();
-        self::$session_expired = $expired;
+        self::$session_expired = false;
     }
 }
 }
