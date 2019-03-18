@@ -28,11 +28,11 @@ class UserController extends Controller
         $request = $this->app->request;
         $username = $request->post('username');
         $password = $request->post('password');
-
+	$password_hashed =  password_hash($password, PASSWORD_DEFAULT);
 
         $user = User::makeEmpty();
         $user->setUsername($username);
-        $user->setPassword($password);
+        $user->setPassword($password_hashed);
 
         if($request->post('email'))
         {
@@ -122,6 +122,7 @@ class UserController extends Controller
 
             $username = $request->post('username');
             $password = $request->post('password');
+	    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
             $email = $request->post('email');
             $bio = $request->post('bio');
 
@@ -129,7 +130,7 @@ class UserController extends Controller
             
 
             $user->setUsername($username);
-            $user->setPassword($password);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
@@ -161,6 +162,8 @@ class UserController extends Controller
 
             $username = $request->post('username');
             $password = $request->post('password');
+	    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
             $email = $request->post('email');
             $bio = $request->post('bio');
 
@@ -168,7 +171,7 @@ class UserController extends Controller
             
 
             $user->setUsername($username);
-            $user->setPassword($password);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
