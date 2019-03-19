@@ -4,7 +4,6 @@ namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
-use ttm4135\webapp\InputSanitizer;
 
 class LoginController extends Controller
 {
@@ -23,31 +22,24 @@ class LoginController extends Controller
             $this->app->flash('info', 'You are already logged in as ' . $username);
             $this->app->redirect('/');
         } else {
-		if (isset($_COOKIE["username"])){
-			$username = $_COOKIE["username"];
-		} else {
-			$username = "";
-		}
-            $this->render('login.twig', ['title'=>"Login", 'username'=>$username]);
+            $this->render('login.twig', ['title'=>"Login"]);
         }
     }
 
     function login()
     {
         $request = $this->app->request;
-        $input_handler = new InputSanitizer($request);
+        $username = $request->post('username');
+        $password = $request->post('password');
         $this->validation = new InputValidation();
-        
-        $username = $input_handler->get('username');
-        $password = $input_handler->get('password');
+        print( (string) $this->validation->validUserName($username));
 
-        if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
+        if($this->validation->validUserName($username) == TRUE){ #&& $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
-                //Set session when user logs in
-		        UserController::setCookieUsername($username);	
-                Auth::login($user->getId());
-                $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
+                $_SESSION['userid'] = $user->getId();
+                $this->app->flash('info', "You are now s
+uccessfully logged in as " . $user->getUsername() . ".");
                 $this->app->redirect('/');
             } else {
                 $this->app->flashNow('error', 'Incorrect username/password combination.');
@@ -70,10 +62,4 @@ class LoginController extends Controller
         return;
        
     }
-
-    function expired() {
-        Auth::resetSessionExpired();
-        $this->app->flash('info', 'Your session has expired. Please log in again.');
-            $this->app->redirect('/login');
-        }
 }

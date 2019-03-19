@@ -6,6 +6,9 @@ use ttm4135\webapp\models\User;
 
 class Auth
 {
+    const SESSION_EXPIRATION_TIME = 240;
+    private static $session_expired = null;
+
     function __construct()
     {
     }
@@ -18,10 +21,12 @@ class Auth
             return false;
         }
 
-        if( $user->getPassword() == $password)
+        if (password_verify($password, $user->getPassword()))
         {
+	  echo 'Pass is valid';
           return true;
         }
+	echo 'pass is invalid';
         return false;
     }
 
@@ -78,11 +83,49 @@ class Auth
         return false;
 
     }
+
+    //Countdown
+    static function updateSessionExpiration() {
+        if (isset($_SESSION['timestamp']) && time() - $_SESSION['timestamp'] > self::SESSION_EXPIRATION_TIME) {
+            if(self::check()) {
+            self::logout($expired=true);
+            }
+        }
+        $_SESSION['timestamp'] = time();
+        }
+
+    //Set a session when user logs in
+    static function login($user_id) {
+        $_SESSION['userid'] = $user_id;
+        }
     
+    static function register(){
+        $_SESSION['registration_counter'] += 1 ;
+    }
+
+    
+
     static function logout()
     {
+        if (self::check()) {
         session_unset();
         session_destroy();	
         session_regenerate_id();
+        self::$session_expired = false;
     }
+}
+
+
+    static function isSessionExpired() {
+	if (self::$session_expired) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+
+    static function resetSessionExpired() {
+        self::$session_expired = false;
+        }
 }
