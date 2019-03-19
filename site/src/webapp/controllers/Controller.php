@@ -34,7 +34,6 @@ class Controller
     
     function hasSessionExpired(){
         if(Auth::isSessionExpired()){
-            $this->app->flash('info', 'Your session has expired. Please log in again.');
             $this->app->redirect('/expired');
         }
         if (!Auth::check()) {
