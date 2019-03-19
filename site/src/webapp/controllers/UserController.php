@@ -34,7 +34,6 @@ class UserController extends Controller
         $validation = new InputValidation();
 
 
-
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
             && $validation->isValidUserName($username) && $validation->isValidPassword($password))
             {
@@ -100,43 +99,6 @@ class UserController extends Controller
         }
     }
 
-    function newuser()
-    {
-
-        $user = User::makeEmpty();
-
-        if (Auth::isAdmin()) {
-
-
-            $request = $this->app->request;
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-	          $password_hashed = password_hash($password, PASSWORD_DEFAULT);
-            $email = $request->post('email');
-            $bio = $request->post('bio');
-
-            $isAdmin = ($request->post('isAdmin') != null);
-
-
-            $user->setUsername($username);
-            $user->setPassword($password_hashed);
-            $user->setBio($bio);
-            $user->setEmail($email);
-            $user->setIsAdmin($isAdmin);
-
-            $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
-
-            $this->app->redirect('/admin');
-
-
-        } else {
-            $username = $user->getUserName();
-            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-            $this->app->redirect('/');
-        }
-    }
 
     function edit($tuserid)
     {
