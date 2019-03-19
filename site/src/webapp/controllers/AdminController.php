@@ -14,78 +14,50 @@ class AdminController extends Controller
         parent::__construct();
     }
 
-    function index()
+    function index()     
     {
-        if(!Auth::isSessionExpired()){
-            if (Auth::isAdmin()) {
-                if(!Auth::isSessionExpired()){
-                    
-                }
-                $users = User::all();
-                $this->render('users.twig', ['users' => $users]);
-            } else {
-                $username = Auth::user()->getUserName();
-                $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-                $this->app->redirect('/');
-            }
+        if (Auth::isAdmin()) {
+            $users = User::all();
+            $this->render('users.twig', ['users' => $users]);
+        } else {
+            $username = Auth::user()->getUserName();
+            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+            $this->app->redirect('/');
         }
-        else{
-            $this->app->flash('info', 'Your session has expired ' . $username);
-                $this->app->redirect('/logout');
-       
-        }
-        }
-
+    }
 
     function create()
     {
-        if(!Auth::isSessionExpired()){
-            if (Auth::isAdmin()) {
-                $user = User::makeEmpty();
-                $this->render('showuser.twig', [
-                  'user' => $user
-                ]);
-              } else {
-                  $username = Auth::user()->getUserName();
-                  $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-                  $this->app->redirect('/');
-              }
-          }
-          else{
-              $this->app->flash('info', 'Your session has expired ' . $username);
-              $this->app->redirect('/logout');
-          }
+        if (Auth::isAdmin()) {
+          $user = User::makeEmpty();
+          $this->render('showuser.twig', [
+            'user' => $user
+          ]);
+        } else {
+            $username = Auth::user()->getUserName();
+            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+            $this->app->redirect('/');
         }
-
-
-    function show($tuserid)
-    {
-        if(!Auth::isSessionExpired()){
-            if(Auth::userAccess($tuserid) && Auth::isAdmin())
-            {
-              $user = User::findById($tuserid);
-              $this->render('showuser.twig', [
-                'user' => $user
-              ]);
-            } else {
-                $username = Auth::user()->getUserName();
-                $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-                $this->app->redirect('/');
-            }
-        }
-        else{
-            $this->app->flash('info', 'Your session has expired ' . $username);
-            $this->app->redirect('/logout');
-        }
-       
     }
 
-    function edit($tuserid)
+    function show($tuserid)   
     {
-        if(!Auth::isSessionExpired()){
-
+        if(Auth::userAccess($tuserid) && Auth::isAdmin())
+        {
+          $user = User::findById($tuserid);
+          $this->render('showuser.twig', [
+            'user' => $user
+          ]);
+        } else {
+            $username = Auth::user()->getUserName();
+            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+            $this->app->redirect('/');
         }
+    }
 
+    function edit($tuserid)    
+    { 
+        
         $user = User::findById($tuserid);
 
         if (! $user) {
@@ -104,10 +76,9 @@ class AdminController extends Controller
             $isAdmin = ($request->post('isAdmin') != null);
             if ($validation->isValidEmail($email) && $validation->isValidBio($bio)
             && $validation->isValidUserName($username) && $validation->isValidPassword($password)){
-
+                
             $user->setUsername($username);
-            $password_hashed = password_hash($password, PASSWORD_DEFAULT);
-            $user->setPassword($password_hashed);
+            $user->setPassword($password);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
@@ -123,6 +94,7 @@ class AdminController extends Controller
                 $this->app->flash('error', 'Invalid input field(s).');
                 $this->app->redirect('/admin');
             }
+            
 
 
         } else {
@@ -147,12 +119,12 @@ class AdminController extends Controller
         }
     }
 
-
+    
     function deleteMultiple()
     {
       if(Auth::isAdmin()){
           $request = $this->app->request;
-          $userlist = $request->post('userlist');
+          $userlist = $request->post('userlist'); 
           $deleted = [];
 
           if($userlist == NULL){
@@ -177,7 +149,7 @@ class AdminController extends Controller
     }
 
     function newuser()
-    {
+    { 
 
         $user = User::makeEmpty();
 
@@ -206,6 +178,7 @@ class AdminController extends Controller
                     $user->setBio($bio);
                     $user->save();
     
+<<<<<<< HEAD
                     $this->app->flash('info', 'User succesfully created');
                     $this->app->redirect('/admin');
                 }
@@ -222,7 +195,7 @@ class AdminController extends Controller
             $this->app->redirect('/');
         }
     }
-
+    
 
 
 
