@@ -15,6 +15,18 @@
 <input type="text" name="username"> <br />
 <label>Password: </label>
 <input type="text" name="password"> <br />
+
+
+{% if password matches '{^(\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*){6,20}$}' %}
+        <ul class="errors">
+            {% for error in errors %}
+                <li>{{ error }} password not good :/ </li>
+            {% endfor %}
+        </ul>
+{% endif %}
+
+
+
 <label>Email: </label>
 <input type="text" name="email"> <br />
 <label>Biography: </label>

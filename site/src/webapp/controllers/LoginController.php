@@ -23,7 +23,12 @@ class LoginController extends Controller
             $this->app->flash('info', 'You are already logged in as ' . $username);
             $this->app->redirect('/');
         } else {
-            $this->render('login.twig', ['title'=>"Login"]);
+		if (isset($_COOKIE["username"])){
+			$username = $_COOKIE["username"];
+		} else {
+			$username = "";
+		}
+            $this->render('login.twig', ['title'=>"Login", 'username'=>$username]);
         }
     }
 
@@ -40,6 +45,7 @@ class LoginController extends Controller
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 //Set session when user logs in
+		UserController::setCookieUsername($username);	
                 Auth::login($user->getId());
                 $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
                 $this->app->redirect('/');
