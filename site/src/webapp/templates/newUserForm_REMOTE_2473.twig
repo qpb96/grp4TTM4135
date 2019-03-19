@@ -13,12 +13,11 @@
 
 <label>Username: </label>
 <input type="text" name="username"> <br />
-
 <label>Password: </label>
 <input type="text" name="password"> <br />
 
 
-{% if (password matches '{^(\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*){6,20}$}') %}
+{% if not password matches '{^[\d\.]+$}' %}
 
 
         <ul class="errors">
@@ -28,6 +27,7 @@
             {% endfor %}
         </ul>
 {% endif %}
+
 
 
 <label>Email: </label>

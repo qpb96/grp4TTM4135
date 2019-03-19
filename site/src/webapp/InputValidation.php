@@ -1,14 +1,21 @@
 <?php 
     namespace ttm4135\webapp;
 
+use ttm4135\webapp\models\User;
+
+
 
 
 
     class InputValidation {
         function isValidUserName($username)
         {
-		
-	    if($username == null || strlen($username)> 20 ){
+        
+        # Check if username is already taken
+        $isNameUsed = User::findByUser($username);
+
+
+	    if($username == null || strlen($username)> 20 || $isNameUsed != null){
                 return FALSE; 
             }
             else{
@@ -29,27 +36,27 @@
 	
 	}
 
-	function passwordRequirement($password) {
-	
-	/*
-	 *   Password policies:	
-	 *	Must be a minimum of 8 characters
-	 * 	Must contain at least 1 number
-	 *	Must contain at least one uppercase character
-	 *	Must contain at least one lowercase character
-	 */
+        function passwordRequirement($password) {
+        
+        /*
+        *   Password policies:	
+
+            *	Must be a minimum of 8 characters
+            * 	Must contain at least 1 number
+            *	Must contain at least one uppercase character
+            *	Must contain at least one lowercase character
+        */
 
             if(!preg_match('~^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])~m',$password)) {
-		    
-		return FALSE;
-	    }
-	    else {
-	    	
-		return TRUE;
-	    
-	    }
-	
-	}
+                
+                return FALSE;
+            } else {
+                
+                return TRUE;
+            
+            }
+        
+        }
 
 //NOT NULL
 //Max 20 characters
