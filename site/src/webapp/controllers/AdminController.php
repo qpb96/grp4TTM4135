@@ -64,19 +64,19 @@ class AdminController extends Controller
             throw new \Exception("Unable to fetch logged in user's object from db.");
         } elseif (Auth::userAccess($tuserid) && Auth::isAdmin()) {
 
-
             $request = $this->app->request;
-
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-            $email = $request->post('email');
-            $bio = $request->post('bio');
+            $sanitizer = new InputSanitizer($request);
+            $username = $sanitizer->get('username');
+            $password = $sanitizer->get('password');
+            $email = $sanitizer->get('email');
+            $bio = $sanitizer->get('bio');
+            $validation = new InputValidation();
 
 
             $isAdmin = ($request->post('isAdmin') != null);
-            
-
+            if ($validation->isValidEmail($email) && $validation->isValidBio($bio)
+            && $validation->isValidUserName($username) && $validation->isValidPassword($password)){
+                
             $user->setUsername($username);
             $user->setPassword($password);
             $user->setBio($bio);
@@ -84,12 +84,17 @@ class AdminController extends Controller
             $user->setIsAdmin($isAdmin);
 
             $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
+            $this->app->flashNow('info', 'User successfully edited.');
 
             $user = User::findById($tuserid);
 
             $this->render('showuser.twig', ['user' => $user]);
-
+            }
+            else{
+                $this->app->flash('error', 'Invalid input field(s).');
+                $this->app->redirect('/admin');
+            }
+            
 
         } else {
             $username = $user->getUserName();
@@ -178,7 +183,7 @@ class AdminController extends Controller
                 else{
     
                     $this->app->flash('error', 'Invalid input field.');
-                    $this->app->redirect('/register');
+                    $this->app->redirect('/admin');
                 }
 
 
