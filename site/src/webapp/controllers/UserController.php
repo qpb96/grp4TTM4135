@@ -66,6 +66,7 @@ class UserController extends Controller
 
     function show($tuserid)
     {
+        print($tuserid);
         if(Auth::userAccess($tuserid) )
         {
           $user = User::findById($tuserid);
