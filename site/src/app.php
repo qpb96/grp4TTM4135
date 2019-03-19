@@ -57,7 +57,6 @@ $app->post('/register', $ns . 'UserController:create');    //registration action
 
 //Admin
 $app->get('/admin', $ns . 'AdminController:index');        //admin overview        <staff and group members>
-$app->get('/admin',  $ns  .  'AdminController:index');
 $app->get('/admin/delete/:userid', $ns . 'AdminController:delete');     //delete user userid        <staff and group members>
 $app->post('/admin/deleteMultiple', $ns . 'AdminController:deleteMultiple');     //delete user userid        <staff and group members>
 $app->get('/admin/edit/:userid',    $ns . 'AdminController:show');       //add user userid          <staff and group members>
