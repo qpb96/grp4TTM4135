@@ -8,7 +8,7 @@ use ttm4135\webapp\InputSanitizer;
 
 class LoginController extends Controller
 {
-    private $validation;
+ 
 
     function __construct()
     {
@@ -31,10 +31,11 @@ class LoginController extends Controller
     {
         $request = $this->app->request;
         $input_handler = new InputSanitizer($request);
-        $this->validation = new InputValidation();
+        $input_validation = new InputValidation();
+
         
-        $username = $input_handler->get('username');
-        $password = $input_handler->get('password');
+        $username = $input_validation->get('username');
+        $password = $input_validation->get('password');
 
         if($this->validation->validUserName($username) == TRUE && $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {

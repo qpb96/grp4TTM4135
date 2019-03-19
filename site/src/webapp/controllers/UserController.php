@@ -48,7 +48,7 @@ class UserController extends Controller
                 $user->setEmail($email);
                 $user->setBio($bio);
                 $user->save();
-                
+                $_SESSION['']
                 $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
                 $this->app->redirect('/login');
             }

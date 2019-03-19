@@ -97,6 +97,11 @@ class Auth
         $_SESSION['userid'] = $user_id;
         }
     
+    static function register(){
+        $_SESSION['registration_counter'] += 1 ;
+    }
+
+    
 
     static function logout()
     {

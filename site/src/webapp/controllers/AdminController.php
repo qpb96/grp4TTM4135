@@ -64,6 +64,7 @@ class AdminController extends Controller
 
 
             $request = $this->app->request;
+            
 
             $username = $request->post('username');
             $password = $request->post('password');
