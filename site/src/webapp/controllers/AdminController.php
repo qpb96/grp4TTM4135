@@ -16,6 +16,7 @@ class AdminController extends Controller
 
     function index()     
     {
+        $this->hasSessionExpired();
         if (Auth::isAdmin()) {
             $users = User::all();
             $this->render('users.twig', ['users' => $users]);
@@ -28,6 +29,7 @@ class AdminController extends Controller
 
     function create()
     {
+        $this->hasSessionExpired();
         if (Auth::isAdmin()) {
           $user = User::makeEmpty();
           $this->render('showuser.twig', [
@@ -42,6 +44,7 @@ class AdminController extends Controller
 
     function show($tuserid)   
     {
+        $this->hasSessionExpired();
         if(Auth::userAccess($tuserid) && Auth::isAdmin())
         {
           $user = User::findById($tuserid);
@@ -57,7 +60,7 @@ class AdminController extends Controller
 
     function edit($tuserid)    
     { 
-        
+        $this->hasSessionExpired();
         $user = User::findById($tuserid);
 
         if (! $user) {
@@ -106,6 +109,7 @@ class AdminController extends Controller
 
     function delete($tuserid)
     {
+        $this->hasSessionExpired();
         if(Auth::userAccess($tuserid) && Auth::isAdmin())
         {
             $user = User::findById($tuserid);
@@ -122,6 +126,7 @@ class AdminController extends Controller
     
     function deleteMultiple()
     {
+      $this->hasSessionExpired();  
       if(Auth::isAdmin()){
           $request = $this->app->request;
           $userlist = $request->post('userlist'); 
@@ -150,6 +155,7 @@ class AdminController extends Controller
 
     function newuser()
     { 
+        
 
         $user = User::makeEmpty();
 
@@ -178,7 +184,6 @@ class AdminController extends Controller
                     $user->setBio($bio);
                     $user->save();
     
-<<<<<<< HEAD
                     $this->app->flash('info', 'User succesfully created');
                     $this->app->redirect('/admin');
                 }

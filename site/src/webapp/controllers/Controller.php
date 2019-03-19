@@ -32,7 +32,7 @@ class Controller
         setcookie($name, $value, $expiration, $path, $domain, $secure, $httponly);
     }
     
-    static function hasSessionExpired(){
+    function hasSessionExpired(){
         if(Auth::isSessionExpired()){
             $this->app->redirect('/expired');
         }
