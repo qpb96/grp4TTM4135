@@ -17,13 +17,13 @@
         }
 
         function isValidPassword($password){
-           if($password == null || strlen($password)>20){
+            
+            if($password == null || strlen($password)>20){
                 return FALSE;
             }
             else{
                 return TRUE;
             }
-            
         }
 //NOT NULL
 //Max 20 characters

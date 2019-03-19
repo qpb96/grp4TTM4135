@@ -172,13 +172,13 @@ class AdminController extends Controller
                     $user->setBio($bio);
                     $user->save();
     
-                    $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-                    $this->app->redirect('/login');
+                    $this->app->flash('info', 'User succesfully created');
+                    $this->app->redirect('/admin');
                 }
                 else{
     
-                    $this->app->flash('error', 'Invalid input field.');
-                    $this->app->redirect('/register');
+                    $this->app->flash('error', 'Invalid input field(s).');
+                    $this->app->redirect('/admin/create');
                 }
 
 
