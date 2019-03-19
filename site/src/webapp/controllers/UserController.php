@@ -32,7 +32,7 @@ class UserController extends Controller
     function create()
     {
         $request = $this->app->request;
-        $sanitizer = new InputSanitizer();
+        $sanitizer = new InputSanitizer($request);
         $username = $sanitizer->get('username');
         $password = $sanitizer->get('password');
         $email = $sanitizer->get('email');
