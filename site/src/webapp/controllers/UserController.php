@@ -39,8 +39,8 @@ class UserController extends Controller
         $user->setUsername($username);
         $user->setPassword($password);
 
-        if($validation->validEmail($email) && $validation->ValidBio($bio)
-            && $validation->validUserName($username) && $validation->validPassword($password))
+        if($validation->isValidEmail($email) && $validation->isValidBio($bio)
+            && $validation->isValidUserName($username) && $validation->isValidPassword($password))
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
@@ -57,35 +57,6 @@ class UserController extends Controller
                 $this->app->flash('error', 'Invalid input field.');
                 $this->app->redirect('/register');
             }
-
-
-#        if($request->post('email'))
-#        {
-         #$email = $request->post('email');
-#         if($validation->validEmail($email)){
-#            $user->setEmail($email);
-#         }
-#          else{
-#            $this->app->flash('error', 'Email not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-#        if($request->post('bio'))
-#        {
-#          #$bio = $request->post('bio');
-#          if($validation->ValidBio($bio)){
-#            $user->setBio($bio); 
-#          }
-#          else{
-#            $this->app->flash('error', 'Bio not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-
-        
-#       $user->save();
-#        $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-#        $this->app->redirect('/login');
     }
 
     function show($tuserid)   

@@ -81,7 +81,7 @@ class User
         return $this->username;
     }
 
-    function getPassword()
+    function wword()
     {
         return $this->password;
     }
@@ -159,6 +159,7 @@ class User
     static function findByUser($username)
     {
         $query = sprintf(self::FIND_BY_NAME_QUERY, $username);
+        
         $result = self::$app->db->query($query, \PDO::FETCH_ASSOC);
         $row = $result->fetch();
 
