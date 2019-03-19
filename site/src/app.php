@@ -34,6 +34,9 @@ try {
 $ns ='ttm4135\\webapp\\controllers\\';
 
 Auth::updateSessionExpiration();
+if(Auth::isSessionExpired()){
+    $app->post('/logout',$ns . 'LoginController:logout');
+}
 
 
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
