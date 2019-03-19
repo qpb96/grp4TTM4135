@@ -20,10 +20,12 @@
                     {% if isAdmin %}
                         <a href="/admin">Admin section</a> <br>
                     {% endif %}
+                    <a href="/user/edit/:"{{loggedInUsername.id}}> {{loggedInUsername}} </a> <br>
                     <a href="/logout">Log out</a> <br>
                 {% else %}
                     <a href="/register">Create user</a> <br />
                     <a href="/login">Login</a> <br>
+                    
                 {% endif %}
 
 
