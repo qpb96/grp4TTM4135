@@ -13,18 +13,18 @@ class UserController extends Controller
         parent::__construct();
     }
 
-    function index()
+    function index()     
     {
         if (Auth::guest()) {
             $this->render('newUserForm.twig', []);
         } else {
-            $username = Auth::user()->getUserName();
+            $usernme = Auth::user()->getUserName();
             $this->app->flash('info', 'You are already logged in as ' . $username);
             $this->app->redirect('/');
         }
     }
 
-    function create()
+    function create()		  
     {
         $request = $this->app->request;
         $username = $request->post('username');
@@ -32,26 +32,33 @@ class UserController extends Controller
         $email = $request->post('email');
         $bio = $request->post('bio');
         $validation = new InputValidation();
+        print((string) $username);
+        print((string) $password);
+        print((string) $email);
+        print((string) $bio);
 
 
 
-        if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->isValidUserName($username) && $validation->isValidPassword($password))
-            {
-                $user = User::makeEmpty();
-                $user->setUsername($username);
-                $password_hashed =  password_hash($password, PASSWORD_DEFAULT);
-                $user->setPassword($password_hashed);
-                $user->setEmail($email);
-                $user->setBio($bio);
+        $user = User::makeEmpty();
+        $user->setUsername($username);
+        $user->setPassword($password);
+
+        if($validation->validEmail($email) && $validation->ValidBio($bio)
+            && $validation->validUserName($username) && $validation->validPassword($password))
+                            $this->app->flash('error', $val);
+                $this->app->flash('error', $val);
+                $this->app->flash('error', $val);
+                $this->app->flash('error', $val);
+                $this->app->flash('error', $val);
+{
+
                 $user->save();
-
                 $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
                 $this->app->redirect('/login');
             }
             else{
-
-                $this->app->flash('error', 'Invalid input field.');
+		$val= $validation->validEmail($username) ? 'true': 'false' ;
+                $this->app->flash('error', $val.((string) $username)." ".((string) $password)." ".((string) $email)." ".((string) $bio).((string) $validation->validUserName($username)) );
                 $this->app->redirect('/register');
             }
 
@@ -71,7 +78,7 @@ class UserController extends Controller
 #        {
 #          #$bio = $request->post('bio');
 #          if($validation->ValidBio($bio)){
-#            $user->setBio($bio);
+#            $user->setBio($bio); 
 #          }
 #          else{
 #            $this->app->flash('error', 'Bio not valid');
@@ -79,15 +86,59 @@ class UserController extends Controller
 #          }
 #        }
 
-
+        
 #       $user->save();
 #        $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
 #        $this->app->redirect('/login');
     }
 
-    function show($tuserid)
+    function delete($tuserid)
     {
-        if(Auth::userAccess($tuserid) )
+        if(Auth::userAccess($tuserid))
+        {
+            $user = User::findById($tuserid);
+            $user->delete();
+            $this->app->flash('info', 'User ' . $user->getUsername() . '  with id ' . $tuserid . ' has been deleted.');
+            $this->app->redirect('/admin');
+        } else {
+            $username = Auth::user()->getUserName();
+            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+            $this->app->redirect('/');
+        }
+    }
+
+    function deleteMultiple()
+    {
+      if(Auth::isAdmin()){
+          $request = $this->app->request;
+          $userlist = $request->post('userlist'); 
+          $deleted = [];
+
+          if($userlist == NULL){
+              $this->app->flash('info','No user to be deleted.');
+          } else {
+               foreach( $userlist as $duserid)
+               {
+                    $user = User::findById($duserid);
+                    if(  $user->delete() == 1) { //1 row affect by delete, as expect..
+                      $deleted[] = $user->getId();
+                    }
+               }
+               $this->app->flash('info', 'Users with IDs  ' . implode(',',$deleted) . ' have been deleted.');
+          }
+
+          $this->app->redirect('/admin');
+      } else {
+          $username = Auth::user()->getUserName();
+          $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+          $this->app->redirect('/');
+      }
+    }
+
+
+    function show($tuserid)   
+    {
+        if(Auth::userAccess($tuserid))
         {
           $user = User::findById($tuserid);
           $this->render('showuser.twig', [
@@ -101,7 +152,7 @@ class UserController extends Controller
     }
 
     function newuser()
-    {
+    { 
 
         $user = User::makeEmpty();
 
@@ -112,15 +163,14 @@ class UserController extends Controller
 
             $username = $request->post('username');
             $password = $request->post('password');
-	          $password_hashed = password_hash($password, PASSWORD_DEFAULT);
             $email = $request->post('email');
             $bio = $request->post('bio');
 
             $isAdmin = ($request->post('isAdmin') != null);
-
+            
 
             $user->setUsername($username);
-            $user->setPassword($password_hashed);
+            $user->setPassword($password);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
@@ -138,8 +188,8 @@ class UserController extends Controller
         }
     }
 
-    function edit($tuserid)
-    {
+    function edit($tuserid)    
+    { 
 
         $user = User::findById($tuserid);
 
@@ -152,17 +202,15 @@ class UserController extends Controller
 
             $username = $request->post('username');
             $password = $request->post('password');
-	          $password_hashed = password_hash($password, PASSWORD_DEFAULT);
-
             $email = $request->post('email');
             $bio = $request->post('bio');
 
 
             $isAdmin = ($request->post('isAdmin') != null);
-
+            
 
             $user->setUsername($username);
-            $user->setPassword($password_hashed);
+            $user->setPassword($password);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);

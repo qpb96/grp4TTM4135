@@ -23,3 +23,5 @@ class Controller
         print $this->app->render($template, $variables);
     }
 }
+
+#Just testing things
