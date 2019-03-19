@@ -41,7 +41,7 @@ class UserController extends Controller
 
 
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->isValidUserName($username) && $validation->isValidPassword($password))
+            && $validation->isValidUserName($username) && $validation->passwordRequirement($password))
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
