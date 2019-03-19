@@ -15,20 +15,14 @@ class HomeController extends Controller
 
     function index()     
     {
-        if(!Auth::isSessionExpired()){
-            if (Auth::check()) {
-                $user = Auth::user();
-                $this->render('base.twig', []);
-            } else {
-                $this->render('base.twig',[]);
-            }
-
+        $this->hasSessionExpired();
+        if (Auth::check()) {
+            $user = Auth::user();
+            $this->render('base.twig', []);
+        } 
+        else {
+            $this->render('base.twig',[]);
         }
-        else{
-            $this->app->flash("info", "Session expired");
-            $this->app->redirect('/logout');
-        }
-
     }
 
 
