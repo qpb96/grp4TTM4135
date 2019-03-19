@@ -124,8 +124,11 @@ class Auth
 	}
     }
 
-
     static function resetSessionExpired() {
         self::$session_expired = false;
         }
+    
+    static function getSessionExpired(){
+        return self::$session_expired;
+    }    
 }

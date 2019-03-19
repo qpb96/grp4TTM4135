@@ -16,8 +16,8 @@ class AdminController extends Controller
 
     function index()     
     {
-        if(Auth::isSessionExpired()){
-            $this->app->redirect("/login");
+        if(Auth::isSessionExpired() || Auth::getSessionExpired()==false){
+            $this->app->redirect("/expired");
         }
         else{
             if (Auth::isAdmin()) {
