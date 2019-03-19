@@ -159,7 +159,8 @@ class AdminController extends Controller
             
 
             $user->setUsername($username);
-            $user->setPassword($password);
+	    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);

@@ -17,7 +17,7 @@
 <input type="text" name="password"> <br />
 
 
-{% if not password matches '{^[\d\.]+$}' %}
+{% if (password matches '{^(\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*){6,20}$}') %}
 
 
         <ul class="errors">
