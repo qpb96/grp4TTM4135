@@ -8,6 +8,7 @@ class Auth
 {
     const SESSION_EXPIRATION_TIME = 10;
     private static $session_expired = null;
+    private static $has_session_expired = False;
 
     function __construct()
     {
@@ -112,12 +113,13 @@ class Auth
         session_destroy();	
         session_regenerate_id();
         self::$session_expired = false;
+        self::$has_session_expired = true;
     }
 }
 
 
     static function isSessionExpired() {
-	if (self::$session_expired) {
+	if (self::$has_session_expired) {
 	    return true;
 	} else {
 	    return false;
