@@ -117,7 +117,7 @@ class Auth
 
 
     static function isSessionExpired() {
-	if (self::$session_expired) {
+	if (self::$session_expired == false) {
 	    return true;
 	} else {
 	    return false;
@@ -128,7 +128,5 @@ class Auth
         self::$session_expired = false;
         }
     
-    static function getSessionExpired(){
-        return self::$session_expired;
-    }    
+
 }
