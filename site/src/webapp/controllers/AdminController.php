@@ -18,6 +18,9 @@ class AdminController extends Controller
     {
         if(!Auth::isSessionExpired()){
             if (Auth::isAdmin()) {
+                if(!Auth::isSessionExpired()){
+                    
+                }
                 $users = User::all();
                 $this->render('users.twig', ['users' => $users]);
             } else {
