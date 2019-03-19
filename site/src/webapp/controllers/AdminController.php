@@ -14,7 +14,7 @@ class AdminController extends Controller
         parent::__construct();
     }
 
-    function index()     
+    function index()
     {
         if (Auth::isAdmin()) {
             $users = User::all();
@@ -40,7 +40,7 @@ class AdminController extends Controller
         }
     }
 
-    function show($tuserid)   
+    function show($tuserid)
     {
         if(Auth::userAccess($tuserid) && Auth::isAdmin())
         {
@@ -55,9 +55,9 @@ class AdminController extends Controller
         }
     }
 
-    function edit($tuserid)    
-    { 
-        
+    function edit($tuserid)
+    {
+
         $user = User::findById($tuserid);
 
         if (! $user) {
@@ -76,9 +76,10 @@ class AdminController extends Controller
             $isAdmin = ($request->post('isAdmin') != null);
             if ($validation->isValidEmail($email) && $validation->isValidBio($bio)
             && $validation->isValidUserName($username) && $validation->isValidPassword($password)){
-                
+
             $user->setUsername($username);
-            $user->setPassword($password);
+            $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
@@ -94,7 +95,7 @@ class AdminController extends Controller
                 $this->app->flash('error', 'Invalid input field(s).');
                 $this->app->redirect('/admin');
             }
-            
+
 
         } else {
             $username = $user->getUserName();
@@ -118,12 +119,12 @@ class AdminController extends Controller
         }
     }
 
-    
+
     function deleteMultiple()
     {
       if(Auth::isAdmin()){
           $request = $this->app->request;
-          $userlist = $request->post('userlist'); 
+          $userlist = $request->post('userlist');
           $deleted = [];
 
           if($userlist == NULL){
@@ -148,7 +149,7 @@ class AdminController extends Controller
     }
 
     function newuser()
-    { 
+    {
 
         $user = User::makeEmpty();
 
@@ -176,12 +177,12 @@ class AdminController extends Controller
                     $user->setEmail($email);
                     $user->setBio($bio);
                     $user->save();
-    
+
                     $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
                     $this->app->redirect('/login');
                 }
                 else{
-    
+
                     $this->app->flash('error', 'Invalid input field.');
                     $this->app->redirect('/admin');
                 }
@@ -193,7 +194,7 @@ class AdminController extends Controller
             $this->app->redirect('/');
         }
     }
-    
+
 
 
 
