@@ -16,25 +16,16 @@ class AdminController extends Controller
 
     function index()     
     {
-        if(Auth::isSessionExpired()){
-            $this->app->redirect("/expired");
-        }
-        elseif (!Auth::check()) {
-            $this->app->flash('info', 'You must be logged in to access this content.');
-            $this->app->redirect('/login');
-        }
-        else{
-            if (Auth::isAdmin()) {
-                $users = User::all();
-                $this->render('users.twig', ['users' => $users]);
-            } else {
-                $username = Auth::user()->getUserName();
-                $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-                $this->app->redirect('/');
-            }
-        }
+        $this->hasSessionExpired();
         
-
+        if (Auth::isAdmin()) {
+            $users = User::all();
+            $this->render('users.twig', ['users' => $users]);
+        } else {
+            $username = Auth::user()->getUserName();
+            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+            $this->app->redirect('/');
+        }
     }
 
     function create()
