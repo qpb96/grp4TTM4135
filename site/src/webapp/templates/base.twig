@@ -37,8 +37,9 @@
                 <h1>WELCOME TO GROUP4 !<h2>
                 {% if isLoggedIn %}
                 <h2> Hi {{loggedInUsername}}! </h2>
+                <h4> We hope that you will find something interesting! <h4>
                 {% else %}
-                <h2> Public face </h2>
+                <h2>  Please log in to see more of this awesome website! </h2>
                 {% endif %}
                 
                 
@@ -49,7 +50,7 @@
         </div>
 
         <div id="footer">
-            {% block footer %}here be footer{% endblock %}
+            {% block footer %}<img src="jk.jpg" alt="">{% endblock %}
         </div>
     </body>
 </html>
