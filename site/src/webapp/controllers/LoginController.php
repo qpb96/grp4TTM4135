@@ -45,7 +45,7 @@ class LoginController extends Controller
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 //Set session when user logs in
-		UserController::setCookieUsername($username);	
+		        UserController::setCookieUsername($username);	
                 Auth::login($user->getId());
                 $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
                 $this->app->redirect('/');
