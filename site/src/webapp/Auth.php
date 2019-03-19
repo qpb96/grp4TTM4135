@@ -89,7 +89,9 @@ class Auth
     static function updateSessionExpiration() {
         if (isset($_SESSION['timestamp']) && time() - $_SESSION['timestamp'] > self::SESSION_EXPIRATION_TIME) {
             if(self::check()) {
-            self::logout($expired=true);
+            self::$has_session_expired = true;    
+            self::logout();
+            
             }
         }
         $_SESSION['timestamp'] = time();
@@ -113,7 +115,6 @@ class Auth
         session_destroy();	
         session_regenerate_id();
         self::$session_expired = false;
-        self::$has_session_expired = true;
     }
 }
 
