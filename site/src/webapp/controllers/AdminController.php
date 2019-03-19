@@ -16,47 +16,71 @@ class AdminController extends Controller
 
     function index()
     {
-        if (Auth::isAdmin()) {
-            $users = User::all();
-            $this->render('users.twig', ['users' => $users]);
-        } else {
-            $username = Auth::user()->getUserName();
-            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-            $this->app->redirect('/');
+        if(!Auth::isSessionExpired()){
+            if (Auth::isAdmin()) {
+                $users = User::all();
+                $this->render('users.twig', ['users' => $users]);
+            } else {
+                $username = Auth::user()->getUserName();
+                $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+                $this->app->redirect('/');
+            }
         }
-    }
+        else{
+            $this->app->flash('info', 'Your session has expired ' . $username);
+                $this->app->redirect('/logout');
+        }
+        }
+
 
     function create()
     {
-        if (Auth::isAdmin()) {
-          $user = User::makeEmpty();
-          $this->render('showuser.twig', [
-            'user' => $user
-          ]);
-        } else {
-            $username = Auth::user()->getUserName();
-            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-            $this->app->redirect('/');
+        if(!Auth::isSessionExpired()){
+            if (Auth::isAdmin()) {
+                $user = User::makeEmpty();
+                $this->render('showuser.twig', [
+                  'user' => $user
+                ]);
+              } else {
+                  $username = Auth::user()->getUserName();
+                  $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+                  $this->app->redirect('/');
+              }
+          }
+          else{
+              $this->app->flash('info', 'Your session has expired ' . $username);
+              $this->app->redirect('/logout');
+          }
         }
-    }
+
 
     function show($tuserid)
     {
-        if(Auth::userAccess($tuserid) && Auth::isAdmin())
-        {
-          $user = User::findById($tuserid);
-          $this->render('showuser.twig', [
-            'user' => $user
-          ]);
-        } else {
-            $username = Auth::user()->getUserName();
-            $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
-            $this->app->redirect('/');
+        if(!Auth::isSessionExpired()){
+            if(Auth::userAccess($tuserid) && Auth::isAdmin())
+            {
+              $user = User::findById($tuserid);
+              $this->render('showuser.twig', [
+                'user' => $user
+              ]);
+            } else {
+                $username = Auth::user()->getUserName();
+                $this->app->flash('info', 'You do not have access this resource. You are logged in as ' . $username);
+                $this->app->redirect('/');
+            }
         }
+        else{
+            $this->app->flash('info', 'Your session has expired ' . $username);
+            $this->app->redirect('/logout');
+        }
+       
     }
 
     function edit($tuserid)
     {
+        if(!Auth::isSessionExpired()){
+
+        }
 
         $user = User::findById($tuserid);
 
