@@ -36,6 +36,9 @@ class Controller
         if(Auth::isSessionExpired()){
             $this->app->redirect('/expired');
         }
+        if (!Auth::check()) {
+            $this->app->flash('info', 'You must be logged in to access this content.');
+            $this->app->redirect('/login');
     }
 }
 
