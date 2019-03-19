@@ -19,6 +19,10 @@ class AdminController extends Controller
         if(Auth::isSessionExpired()){
             $this->app->redirect("/expired");
         }
+        elseif (!Auth::check()) {
+            $this->app->flash('info', 'You must be logged in to access this content.');
+            $this->app->redirect('/login');
+        }
         else{
             if (Auth::isAdmin()) {
                 $users = User::all();
