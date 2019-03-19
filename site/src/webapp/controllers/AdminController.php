@@ -29,6 +29,7 @@ class AdminController extends Controller
         else{
             $this->app->flash('info', 'Your session has expired ' . $username);
                 $this->app->redirect('/logout');
+       
         }
         }
 
