@@ -74,6 +74,6 @@ class LoginController extends Controller
     function expired() {
         Auth::resetSessionExpired();
         $this->app->flash('info', 'Your session has expired. Please log in again.');
-            $this->app->redirect('/login');
+            $this->app->redirect('/expired');
         }
 }
