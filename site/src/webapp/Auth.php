@@ -21,10 +21,12 @@ class Auth
             return false;
         }
 
-        if( $user->getPassword() == $password)
+        if (password_verify($password, $user->getPassword()))
         {
+	  echo 'Pass is valid';
           return true;
         }
+	echo 'pass is invalid';
         return false;
     }
 

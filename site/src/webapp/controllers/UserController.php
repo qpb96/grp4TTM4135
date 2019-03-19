@@ -13,7 +13,7 @@ class UserController extends Controller
         parent::__construct();
     }
 
-    function index()     
+    function index()
     {
         if (Auth::guest()) {
             $this->render('newUserForm.twig', []);
@@ -24,7 +24,7 @@ class UserController extends Controller
         }
     }
 
-    function create()		  
+    function create()
     {
         $request = $this->app->request;
         $username = $request->post('username');
@@ -39,16 +39,17 @@ class UserController extends Controller
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
-                $user->setPassword($password);
+                $password_hashed =  password_hash($password, PASSWORD_DEFAULT);
+                $user->setPassword($password_hashed);
                 $user->setEmail($email);
                 $user->setBio($bio);
                 $user->save();
-                
+
                 $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
                 $this->app->redirect('/login');
             }
             else{
-                
+
                 $this->app->flash('error', 'Invalid input field.');
                 $this->app->redirect('/register');
             }
@@ -69,7 +70,7 @@ class UserController extends Controller
 #        {
 #          #$bio = $request->post('bio');
 #          if($validation->ValidBio($bio)){
-#            $user->setBio($bio); 
+#            $user->setBio($bio);
 #          }
 #          else{
 #            $this->app->flash('error', 'Bio not valid');
@@ -77,13 +78,13 @@ class UserController extends Controller
 #          }
 #        }
 
-        
+
 #       $user->save();
 #        $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
 #        $this->app->redirect('/login');
     }
 
-    function show($tuserid)   
+    function show($tuserid)
     {
         if(Auth::userAccess($tuserid) )
         {
@@ -98,11 +99,10 @@ class UserController extends Controller
         }
     }
 
-   
 
-    function edit($tuserid)    
-    { 
-        
+    function edit($tuserid)
+    {
+
         $user = User::findById($tuserid);
 
         if (! $user) {
@@ -114,15 +114,17 @@ class UserController extends Controller
 
             $username = $request->post('username');
             $password = $request->post('password');
+	          $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
             $email = $request->post('email');
             $bio = $request->post('bio');
 
 
             $isAdmin = ($request->post('isAdmin') != null);
-            
+
 
             $user->setUsername($username);
-            $user->setPassword($password);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
