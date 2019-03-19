@@ -5,7 +5,7 @@
 
 
     class InputValidation {
-        function validUserName($username)
+        function isValidUserName($username)
         {
             if($username == null || strlen($username)> 20 ){
                 return FALSE; 
@@ -16,7 +16,7 @@
 
         }
 
-        function validPassword($password){
+        function isValidPassword($password){
            if($password == null || strlen($password)>20){
                 return FALSE;
             }
@@ -28,7 +28,7 @@
 //NOT NULL
 //Max 20 characters
 //Valid email format, The FILTER_VALIDATE_EMAIL filter validates an e-mail address.
-        function validEmail($email){
+        function isValidEmail($email){
             if(strlen($email) < 20 && $email != NULL && filter_var($email, FILTER_VALIDATE_EMAIL)){
                 return TRUE;
             }
@@ -37,7 +37,7 @@
         }
 
 //Max 200 characters
-        function ValidBio($bio){
+        function isValidBio($bio){
             if(strlen($bio) < 200 && $bio !=NULL ){
                 return TRUE;
             }
