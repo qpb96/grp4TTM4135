@@ -34,6 +34,9 @@ try {
 $ns ='ttm4135\\webapp\\controllers\\';
 
 Auth::updateSessionExpiration();
+if(Auth::isSessionExpired()){
+    $app->post('/logout',$ns . 'LoginController:logout');
+}
 
 
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
@@ -49,12 +52,13 @@ $app->post('/login', $ns . 'LoginController:login');       //login action       
 
 $app->post('/logout',$ns . 'LoginController:logout');  //logs out    <all users>
 $app->get('/logout', $ns . 'LoginController:logout');  //logs out    <all users>
+$app->get('/expired', $ns . 'LoginController:expired'); // session expired
+
 $app->get( '/register', $ns . 'UserController:index');     //registration form     <all visitors with valid personal cert>
 $app->post('/register', $ns . 'UserController:create');    //registration action   <all visitors with valid personal cert>
 
 //Admin
 $app->get('/admin', $ns . 'AdminController:index');        //admin overview        <staff and group members>
-$app->get('/admin',  $ns  .  'AdminController:index');
 $app->get('/admin/delete/:userid', $ns . 'AdminController:delete');     //delete user userid        <staff and group members>
 $app->post('/admin/deleteMultiple', $ns . 'AdminController:deleteMultiple');     //delete user userid        <staff and group members>
 $app->get('/admin/edit/:userid',    $ns . 'AdminController:show');       //add user userid          <staff and group members>

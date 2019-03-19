@@ -4,6 +4,8 @@ namespace ttm4135\webapp\controllers;
 
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
+use ttm4135\webapp\InputValidation;
+use ttm4135\webapp\InputSanitizer;
 
 class AdminController extends Controller
 {
@@ -62,19 +64,19 @@ class AdminController extends Controller
             throw new \Exception("Unable to fetch logged in user's object from db.");
         } elseif (Auth::userAccess($tuserid) && Auth::isAdmin()) {
 
-
             $request = $this->app->request;
-            
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-            $email = $request->post('email');
-            $bio = $request->post('bio');
+            $sanitizer = new InputSanitizer($request);
+            $username = $sanitizer->get('username');
+            $password = $sanitizer->get('password');
+            $email = $sanitizer->get('email');
+            $bio = $sanitizer->get('bio');
+            $validation = new InputValidation();
 
 
             $isAdmin = ($request->post('isAdmin') != null);
-            
-
+            if ($validation->isValidEmail($email) && $validation->isValidBio($bio)
+            && $validation->isValidUserName($username) && $validation->isValidPassword($password)){
+                
             $user->setUsername($username);
             $user->setPassword($password);
             $user->setBio($bio);
@@ -82,11 +84,17 @@ class AdminController extends Controller
             $user->setIsAdmin($isAdmin);
 
             $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
+            $this->app->flashNow('info', 'User successfully edited.');
 
             $user = User::findById($tuserid);
 
             $this->render('showuser.twig', ['user' => $user]);
+            }
+            else{
+                $this->app->flash('error', 'Invalid input field(s).');
+                $this->app->redirect('/admin');
+            }
+            
 
 
         } else {
@@ -149,25 +157,36 @@ class AdminController extends Controller
 
 
             $request = $this->app->request;
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-            $email = $request->post('email');
-            $bio = $request->post('bio');
-
             $isAdmin = ($request->post('isAdmin') != null);
-            
+            $this->validation = new InputValidation();
+            $sanitizer = new InputSanitizer($request);
 
-            $user->setUsername($username);
-            $user->setPassword($password);
-            $user->setBio($bio);
-            $user->setEmail($email);
-            $user->setIsAdmin($isAdmin);
+            $username = $sanitizer->get('username');
+            $password = $sanitizer->get('password');
+            $email = $sanitizer->get('email');
+            $bio = $sanitizer->get('bio');
+            $validation = new InputValidation();
 
-            $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
-
-            $this->app->redirect('/admin');
+            if($validation->isValidEmail($email) && $validation->isValidBio($bio)
+                && $validation->isValidUserName($username) && $validation->isValidPassword($password))
+                {
+                    $user = User::makeEmpty();
+                    $user->setUsername($username);
+                    $password_hashed =  password_hash($password, PASSWORD_DEFAULT);
+                    $user->setPassword($password_hashed);
+                    $user->setEmail($email);
+                    $user->setBio($bio);
+                    $user->save();
+    
+<<<<<<< HEAD
+                    $this->app->flash('info', 'User succesfully created');
+                    $this->app->redirect('/admin');
+                }
+                else{
+    
+                    $this->app->flash('error', 'Invalid input field(s).');
+                    $this->app->redirect('/admin/create');
+                }
 
 
         } else {
@@ -176,6 +195,7 @@ class AdminController extends Controller
             $this->app->redirect('/');
         }
     }
+    
 
 
 

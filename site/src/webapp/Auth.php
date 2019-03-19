@@ -6,7 +6,7 @@ use ttm4135\webapp\models\User;
 
 class Auth
 {
-    const SESSION_EXPIRATION_TIME = 240;
+    const SESSION_EXPIRATION_TIME = 10;
     private static $session_expired = null;
 
     function __construct()
@@ -103,7 +103,7 @@ class Auth
         $_SESSION['registration_counter'] += 1 ;
     }
 
-    
+
 
     static function logout()
     {

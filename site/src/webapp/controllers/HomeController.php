@@ -15,10 +15,12 @@ class HomeController extends Controller
 
     function index()     
     {
+        $this->hasSessionExpired();
         if (Auth::check()) {
             $user = Auth::user();
             $this->render('base.twig', []);
-        } else {
+        } 
+        else {
             $this->render('base.twig',[]);
         }
     }
