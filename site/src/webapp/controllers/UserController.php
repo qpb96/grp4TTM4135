@@ -16,6 +16,7 @@ class UserController extends Controller
 
     function index()
     {
+        $this->hasSessionExpired();
         if (Auth::guest()) {
             $this->render('newUserForm.twig', []);
         } else {
