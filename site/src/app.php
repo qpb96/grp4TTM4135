@@ -48,8 +48,8 @@ $app->get('/',     $ns . 'HomeController:index');             //front page      
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
 
-$app->get('/user/edit/:userid',    $ns . 'UserController:show');       //add user userid          <staff and group members>
-$app->post('/user/edit/:userid',   $ns . 'UserController:edit');       //add user userid          <staff and group members>
+$app->get('/user/edit/username',    $ns . 'UserController:show');       //add user userid          <staff and group members>
+$app->post('/user/edit/username',   $ns . 'UserController:edit');       //add user userid          <staff and group members>
 
 $app->post('/logout',$ns . 'LoginController:logout');  //logs out    <all users>
 $app->get('/logout', $ns . 'LoginController:logout');  //logs out    <all users>
