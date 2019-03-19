@@ -33,12 +33,9 @@ class Controller
     }
     
     function hasSessionExpired(){
-        if(Auth::isSessionExpired()){
+        if(Auth::isSessionExpired() && !Auth::check()){
+            $this->app->flash("info", "Session expired");
             $this->app->redirect('/expired');
-        }
-        if (!Auth::check()) {
-            $this->app->flash('info', 'Please log in to access this content.');
-            $this->app->redirect('/login');
         }
     }
 }
