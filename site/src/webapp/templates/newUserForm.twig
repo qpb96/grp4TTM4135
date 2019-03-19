@@ -17,10 +17,13 @@
 <input type="text" name="password"> <br />
 
 
-{% if password matches '{^(\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*){6,20}$}' %}
+{% if not password matches '{^[\d\.]+$}' %}
+
+
         <ul class="errors">
             {% for error in errors %}
                 <li>{{ error }} password not good :/ </li>
+		<h3> password not good :/ </h3>
             {% endfor %}
         </ul>
 {% endif %}

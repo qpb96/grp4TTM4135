@@ -24,6 +24,10 @@ class UserController extends Controller
         }
     }
 
+    static function setCookieUsername($username){
+    	parent::setCookie("username", $username, "/login");
+    }
+
     function create()		  
     {
         $request = $this->app->request;
