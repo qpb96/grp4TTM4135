@@ -64,7 +64,7 @@ class AdminController extends Controller
 
 
             $request = $this->app->request;
-            
+
 
             $username = $request->post('username');
             $password = $request->post('password');
@@ -149,26 +149,35 @@ class AdminController extends Controller
 
 
             $request = $this->app->request;
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-            $email = $request->post('email');
-            $bio = $request->post('bio');
-
             $isAdmin = ($request->post('isAdmin') != null);
-            
+            $this->validation = new InputValidation();
+            $sanitizer = new InputSanitizer($request);
 
-            $user->setUsername($username);
-	    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
-            $user->setPassword($password_hashed);
-            $user->setBio($bio);
-            $user->setEmail($email);
-            $user->setIsAdmin($isAdmin);
+            $username = $sanitizer->get('username');
+            $password = $sanitizer->get('password');
+            $email = $sanitizer->get('email');
+            $bio = $sanitizer->get('bio');
+            $validation = new InputValidation();
 
-            $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
-
-            $this->app->redirect('/admin');
+            if($validation->isValidEmail($email) && $validation->isValidBio($bio)
+                && $validation->isValidUserName($username) && $validation->isValidPassword($password))
+                {
+                    $user = User::makeEmpty();
+                    $user->setUsername($username);
+                    $password_hashed =  password_hash($password, PASSWORD_DEFAULT);
+                    $user->setPassword($password_hashed);
+                    $user->setEmail($email);
+                    $user->setBio($bio);
+                    $user->save();
+    
+                    $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
+                    $this->app->redirect('/login');
+                }
+                else{
+    
+                    $this->app->flash('error', 'Invalid input field.');
+                    $this->app->redirect('/register');
+                }
 
 
         } else {
@@ -177,6 +186,7 @@ class AdminController extends Controller
             $this->app->redirect('/');
         }
     }
+    
 
 
 
