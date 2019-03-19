@@ -16,11 +16,11 @@
                 <a href="/"> Home</a></br />
                 <br>
                 {% if isLoggedIn %}
-                    Logged in as {{ loggedInUsername|raw }}.<br>
+                    Logged in as {{ loggedInUsername|raw }} {{loggedInUsername.id}}.<br>
                     {% if isAdmin %}
                         <a href="/admin">Admin section</a> <br>
                     {% endif %}
-                    <a href="/user/edit/"{{loggedInUsername}}> {{loggedInUsername}} </a> <br>
+                    <a href="/user/edit/"{{loggedInUsername.id}}> {{loggedInUsername}} </a> <br>
                     <a href="/logout">Log out</a> <br>
                 {% else %}
                     <a href="/register">Create user</a> <br />
