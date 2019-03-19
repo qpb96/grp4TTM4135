@@ -19,8 +19,10 @@
 <input type="text" name="email" value="{{user.email}}"> <br />
 <label>bio: </label>
 <input type="text" name="bio" value="{{user.bio}}"> <br />
+{% if user.isAdmin %}
 <label>Administrator: </label>
 <input type="checkbox" name="isAdmin" value="true" {% if user.isAdmin  %} checked {% endif %}">
+{% endif %}
 
 <input type="submit" name="submit" value="Submit">
 </form>
