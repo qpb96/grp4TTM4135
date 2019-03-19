@@ -14,7 +14,7 @@ class AdminController extends Controller
         parent::__construct();
     }
 
-    function index()     
+    function index()
     {
         if (Auth::isAdmin()) {
             $users = User::all();
@@ -40,7 +40,7 @@ class AdminController extends Controller
         }
     }
 
-    function show($tuserid)   
+    function show($tuserid)
     {
         if(Auth::userAccess($tuserid) && Auth::isAdmin())
         {
@@ -55,40 +55,46 @@ class AdminController extends Controller
         }
     }
 
-    function edit($tuserid)    
-    { 
-        
+    function edit($tuserid)
+    {
+
         $user = User::findById($tuserid);
 
         if (! $user) {
             throw new \Exception("Unable to fetch logged in user's object from db.");
         } elseif (Auth::userAccess($tuserid) && Auth::isAdmin()) {
 
-
             $request = $this->app->request;
-
-
-            $username = $request->post('username');
-            $password = $request->post('password');
-            $email = $request->post('email');
-            $bio = $request->post('bio');
+            $sanitizer = new InputSanitizer($request);
+            $username = $sanitizer->get('username');
+            $password = $sanitizer->get('password');
+            $email = $sanitizer->get('email');
+            $bio = $sanitizer->get('bio');
+            $validation = new InputValidation();
 
 
             $isAdmin = ($request->post('isAdmin') != null);
-            
+            if ($validation->isValidEmail($email) && $validation->isValidBio($bio)
+            && $validation->isValidUserName($username) && $validation->isValidPassword($password)){
 
             $user->setUsername($username);
-            $user->setPassword($password);
+            $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+            $user->setPassword($password_hashed);
             $user->setBio($bio);
             $user->setEmail($email);
             $user->setIsAdmin($isAdmin);
 
             $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
+            $this->app->flashNow('info', 'User successfully edited.');
 
             $user = User::findById($tuserid);
 
             $this->render('showuser.twig', ['user' => $user]);
+            }
+            else{
+                $this->app->flash('error', 'Invalid input field(s).');
+                $this->app->redirect('/admin');
+            }
 
 
         } else {
@@ -113,12 +119,12 @@ class AdminController extends Controller
         }
     }
 
-    
+
     function deleteMultiple()
     {
       if(Auth::isAdmin()){
           $request = $this->app->request;
-          $userlist = $request->post('userlist'); 
+          $userlist = $request->post('userlist');
           $deleted = [];
 
           if($userlist == NULL){
@@ -143,7 +149,7 @@ class AdminController extends Controller
     }
 
     function newuser()
-    { 
+    {
 
         $user = User::makeEmpty();
 
@@ -188,7 +194,7 @@ class AdminController extends Controller
             $this->app->redirect('/');
         }
     }
-    
+
 
 
 
