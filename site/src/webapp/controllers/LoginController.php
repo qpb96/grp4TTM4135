@@ -33,8 +33,8 @@ class LoginController extends Controller
         $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
         
-        $username = $request->post('username');
-        $password = $request->post('password');
+        $username = $input_handler->get('username');
+        $password = $input_handler->get('password');
 
         if($this->validation->validUserName($username) == TRUE && $this->validation->validPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
