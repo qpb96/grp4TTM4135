@@ -31,10 +31,11 @@ class UserController extends Controller
     function create()
     {
         $request = $this->app->request;
-        $username = $request->post('username');
-        $password = $request->post('password');
-        $email = $request->post('email');
-        $bio = $request->post('bio');
+        $sanitizer = new InputSanitizer();
+        $username = $sanitizer->get('username');
+        $password = $sanitizer->get('password');
+        $email = $sanitizer->get('email');
+        $bio = $sanitizer->get('bio');
         $validation = new InputValidation();
 
 
@@ -59,33 +60,6 @@ class UserController extends Controller
             }
 
 
-#        if($request->post('email'))
-#        {
-         #$email = $request->post('email');
-#         if($validation->validEmail($email)){
-#            $user->setEmail($email);
-#         }
-#          else{
-#            $this->app->flash('error', 'Email not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-#        if($request->post('bio'))
-#        {
-#          #$bio = $request->post('bio');
-#          if($validation->ValidBio($bio)){
-#            $user->setBio($bio);
-#          }
-#          else{
-#            $this->app->flash('error', 'Bio not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-
-
-#       $user->save();
-#        $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-#        $this->app->redirect('/login');
     }
 
     function show($tuserid)
