@@ -41,5 +41,6 @@ class Controller
             $this->app->redirect('/login');
     }
 }
+}
 
 #Just testing things
