@@ -84,13 +84,13 @@ class LoginController extends Controller
                     }else{
                         // if not show the error
                         $this->app->flash("info", "Robot verification failed");
-                        $this->app->redirect('/');
+                        $this->app->redirect('/login');
                     }
                      
                 }else{
                     // if recaptcha is not checked
                     $this->app->flash("info", "Please mark the checkbox");
-                    $this->app->redirect('/');
+                    $this->app->redirect('/login');
                 } 
             } 
 
