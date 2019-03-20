@@ -5,6 +5,8 @@ use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
+use ReCaptcha\ReCaptcha; // Include the recaptcha lib
+
 
 class LoginController extends Controller
 {
@@ -39,11 +41,23 @@ class LoginController extends Controller
         $request = $this->app->request;
         $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
+
+        $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+        $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+
+        if (!$resp->isSuccess()) {
+         #Do something if the submit wasn't valid ! Use the message to show something
+         $this->render('login.twig', []);
+        }
+         #$message = "The reCAPTCHA wasn't entered correctly. Go back and try it again." . "(reCAPTCHA said: " . $resp->error . ")";
+         #}else{
+    // Everything works good ;) your contact has been saved.
+  #}
         
         $username = $input_handler->get('username');
         $password = $input_handler->get('password');
 
-        if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
+        if($this->validation->isValidUserName($username) == TRUE ){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 //Set session when user logs in
