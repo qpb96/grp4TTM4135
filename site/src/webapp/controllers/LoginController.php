@@ -38,10 +38,11 @@ class LoginController extends Controller
     function login()
     {
         $request = $this->app->request;
+        $requestIP = $request->getServerParam('REMOTE_ADDR');
     
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
-        $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $request->getAttribute('ip_address'));
+        $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $requestIP);
           
         if (!$resp->isSuccess()) {
             print("rRIP");
