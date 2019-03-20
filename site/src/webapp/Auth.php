@@ -101,18 +101,16 @@ class Auth
         $_SESSION['userid'] = $user_id;
         }
     
-    static function register(){
-        $_SESSION['registration_counter'] += 1 ;
-    }
-
-
 
     static function logout()
     {
+        print("logout called");
+        print(session_id());
         if (self::check()) {
         session_unset();
         session_destroy();
-        session_regenerate_id(true);	
+        session_regenerate_id();	
+        print(session_id());
         self::$has_session_expired = true;
     }
 }
