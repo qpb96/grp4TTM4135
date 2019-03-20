@@ -5,15 +5,17 @@ namespace ttm4135\webapp\controllers;
 use PHPGangsta_GoogleAuthenticator;
 use ttm4135\webapp\Auth;
 
-require 'vendor/autoload.php';
+require_once 'PHPGangsta_GoogleAuthenticator.php';
 
 class AuthController extends Controller {
 
 
     function index() {
         $this->app->request();
-        $secretFactory = new PHPGangsta_GoogleAuthenticator();
-        $secret = $secretFactory->create("TTM4135gr18", "$asd");
+        $ga = new PHPGangsta_GoogleAuthenticator();
+        $secret = $ga->createSecret();
+        echo "Secret is: ".$secret."\n\n";
+       
         $auth_key = $secret->getSecretKey();
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
