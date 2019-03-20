@@ -52,14 +52,10 @@ class LoginController extends Controller
 
                 // check do we have recaptcha param added to form and submited
                 if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){ 
-                    
                     //your site secret recaptcha key
                     $secret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
-             
-                     
                     //get verify response data
                     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-                    
                     $responseData = json_decode($verifyResponse);
              
                      // check was the response successfully checked by Google
@@ -88,7 +84,7 @@ class LoginController extends Controller
                     }else{
                         // if not show the error
                         $errMsg = 'Robot verification failed, please try again.';
-                        echo $errMsg;
+                        $this->app->redirect('/');
                     }
                      
                 }else{
@@ -96,13 +92,11 @@ class LoginController extends Controller
                     $errMsg = 'Please click on the reCAPTCHA box.';
                 } 
             } 
-      
-    
 
         }
           
 
-    }
+    
 
     function logout()
     {   
@@ -119,4 +113,5 @@ class LoginController extends Controller
         $this->app->flash('info', 'Your session has expired. Please log in again.');
         $this->app->redirect('/login');
         }
+
 }
