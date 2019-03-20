@@ -53,6 +53,8 @@ class UserController extends Controller
                 $user->setBio($bio);
                 $user->save();
 
+                $user = User::findByUser($username);
+                Auth::login($user->getId());
                 $this->app->flash('info', 'Thanks for creating a user. Please add a 2fa to your account.');
                 $this->app->redirect('/login/auth');
             }
