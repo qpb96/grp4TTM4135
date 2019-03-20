@@ -109,8 +109,8 @@ class Auth
         print(" -------");
         if (self::check()) {
         session_unset();
-        session_destroy();
-        session_regenerate_id();	
+        session_regenerate_id();
+        session_destroy();	
         print(session_id());
         self::$has_session_expired = true;
     }
