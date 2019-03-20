@@ -55,6 +55,8 @@ class LoginController extends Controller
             }
         }
         else{
+            print($username)
+            print($password)
             $this->app->flash("error", "Invalid input in username or password");
             $this->render('login.twig', []);            
         }
