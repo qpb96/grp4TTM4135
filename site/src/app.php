@@ -48,6 +48,8 @@ $app->post('/help',     $ns . 'HomeController:help');
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
 
+$app->get('/login/auth', $ns . 'AuthController:index');
+
 $app->get('/user/edit/:userid',    $ns . 'UserController:show');       //add user userid          <staff and group members>
 $app->post('/user/edit/:userid',   $ns . 'UserController:edit');       //add user userid          <staff and group members>
 
