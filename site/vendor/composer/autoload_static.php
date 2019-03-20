@@ -28,6 +28,7 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         ),
         'P' => 
         array (
+            'Psr\\Cache\\' => 10,
             'PragmaRX\\Google2FA\\Tests\\' => 25,
             'PragmaRX\\Google2FA\\' => 19,
             'ParagonIE\\ConstantTime\\' => 23,
@@ -35,6 +36,14 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         'G' => 
         array (
             'Google\\Authenticator\\' => 21,
+        ),
+        'D' => 
+        array (
+            'Dolondro\\GoogleAuthenticator\\' => 29,
+        ),
+        'B' => 
+        array (
+            'Base32\\' => 7,
         ),
     );
 
@@ -63,6 +72,10 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         array (
             0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
         ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
         'PragmaRX\\Google2FA\\Tests\\' => 
         array (
             0 => __DIR__ . '/..' . '/pragmarx/google2fa/tests',
@@ -78,6 +91,14 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         'Google\\Authenticator\\' => 
         array (
             0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
+        'Dolondro\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dolondro/google-authenticator/src',
+        ),
+        'Base32\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/christian-riesen/base32/src',
         ),
     );
 
