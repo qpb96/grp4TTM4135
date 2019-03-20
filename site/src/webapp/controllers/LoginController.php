@@ -47,7 +47,7 @@ class LoginController extends Controller
             if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){ 
                 
                 //your site secret recaptcha key
-                $secret = 'YOUR-SITE-SECRET-RECAPTCHA-KEY';
+                $secret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
          
                  
                 //get verify response data
@@ -70,41 +70,43 @@ class LoginController extends Controller
             }else{
                 // if recaptcha is not checked
                 $errMsg = 'Please click on the reCAPTCHA box.';
+                $this->app->flash("error", "Invalid input in username or password");
+                $this->render('login.twig', []);  
             } 
         } 
   
 
-        if (!$resp->isSuccess()) {
-            $this->app->flash("info", "Prove us that you are not a bot");
-            $this->app->redirect("/login");
-
-        }else{
-            $input_handler = new InputSanitizer($request);
-            $this->validation = new InputValidation();
-            
-            $username = $input_handler->get('username');
-            $password = $input_handler->get('password');
-    
-            if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
-                if ( Auth::checkCredentials($username, $password) ) {
-                    $user = User::findByUser($username);
-                    //Set session when user logs in
-                    UserController::setCookieUsername($username);	
-                    Auth::login($user->getId());
-                    $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
-                    $this->app->redirect('/');
-                } else {
-                    $this->app->flashNow('error', 'Incorrect username/password combination.');
-                    $this->render('login.twig', []);
-                }
-            }
-            else{
-                print($username);
-                print($password);
-                $this->app->flash("error", "Invalid input in username or password");
-                $this->render('login.twig', []);            
-            }
-        }
+#        if (!$resp->isSuccess()) {
+#            $this->app->flash("info", "Prove us that you are not a bot");
+#            $this->app->redirect("/login");
+#
+ #       }else{
+ #           $input_handler = new InputSanitizer($request);
+ #           $this->validation = new InputValidation();
+ #           
+ #           $username = $input_handler->get('username');
+ #           $password = $input_handler->get('password');
+ #   
+ #           if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
+ #               if ( Auth::checkCredentials($username, $password) ) {
+ #                   $user = User::findByUser($username);
+ #                   //Set session when user logs in
+ #                   UserController::setCookieUsername($username);	
+ #                   Auth::login($user->getId());
+ #                   $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
+ #                   $this->app->redirect('/');
+ #               } else {
+ #                   $this->app->flashNow('error', 'Incorrect username/password combination.');
+ #                   $this->render('login.twig', []);
+ #               }
+ #           }
+ #           else{
+ #               print($username);
+ #               print($password);
+ #               $this->app->flash("error", "Invalid input in username or password");
+ #               $this->render('login.twig', []);            
+ #           }
+ #       }
           
 
     }
