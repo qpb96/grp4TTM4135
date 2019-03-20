@@ -35,8 +35,6 @@ class LoginController extends Controller
     function login()
     {
 
-
-
         $request = $this->app->request;
         $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
