@@ -104,15 +104,11 @@ class Auth
 
     static function logout()
     {
-        print("logout called");
-        print(session_id());
-        print(" -------");
+
         if (self::check()) {
-        print("test");    
         session_unset();
         session_regenerate_id();
         session_destroy();	
-        print(session_id());
         self::$has_session_expired = true;
     }
 }
