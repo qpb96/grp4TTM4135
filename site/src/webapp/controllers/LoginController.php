@@ -6,7 +6,6 @@ use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 
-
 class LoginController extends Controller
 {
     private $validation;
@@ -35,18 +34,14 @@ class LoginController extends Controller
 
     function login()
     {
-
-
         $request = $this->app->request;
         $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
-
-
         
         $username = $input_handler->get('username');
         $password = $input_handler->get('password');
 
-        if(true){#$this->validation->isValidUserName($username) == TRUE ){
+        if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 //Set session when user logs in
