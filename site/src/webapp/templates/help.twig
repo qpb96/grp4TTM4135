@@ -1,10 +1,11 @@
 {% extends 'base.twig' %}
-
+<script src='https://www.google.com/recaptcha/api.js' async defer >
 {% block content %}
 
 <h2>Help </h2>
 
 {{ flash.error|raw }} <br />
+
 
 <form action="" method="POST">
 
@@ -14,9 +15,9 @@
 <input type="text" name="email" value=""> <br />
 <label>text: </label>
 <TEXTAREA Name="content" ROWS="2" COLS="20" placeholder="Write your issue here" value=""></TEXTAREA><br />
-
-
 <input type="submit" name="submit" value="Submit">
 </form>
+
+
 {% endblock %}
 
