@@ -6,16 +6,14 @@
 <h2>Login</h2>
 
 {{ flash.error|raw }} <br />
-{{form_start(form)}}
+
 <form action="" method="POST">
 
 <label>Username: </label>
 <input type="text" name="username"> <br />
 <label>Password: </label>
 <input type="password" name="password"> <br />
-<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
 <input type="submit" name="submit" value="Log in">
-{{form_widget(form)}}
-{{form_end(form)}}
+
 </form>
 {% endblock %}
