@@ -40,7 +40,7 @@ class LoginController extends Controller
         $request = $this->app->request;
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
-        $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+        $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $request->getClientIps());
           
         if (!$resp->isSuccess()) {
             print("rRIP");
