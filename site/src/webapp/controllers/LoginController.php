@@ -37,11 +37,8 @@ class LoginController extends Controller
 
     function login()
     {
-  #       $secretFactory = new GoogleAuthenticator\SecretFactory();
-  #              $secret = $secretFactory->create("TTM4135gr18", $username);
-   #             $auth_key = $secret->getSecretKey();
-   #             $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
-    #            $auth_url = $qrImageGenerator->generateUri($secret);
+        #TODO: check if a user has a secret key, if so, must enter the auth code
+
 
 
         $request = $this->app->request;

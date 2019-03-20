@@ -23,6 +23,7 @@ class AuthController extends Controller {
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
        # $user->setTempAuth($auth_key, $auth_url);
+       #TODO add secret key to database
 
         $this->render('auth.twig', ['url'=>$auth_url]);
 
