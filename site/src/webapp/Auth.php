@@ -98,6 +98,7 @@ class Auth
 
     //Set a session when user logs in
     static function login($user_id) {
+        session_regenerate_id();
         $_SESSION['userid'] = $user_id;
         }
     
