@@ -37,6 +37,8 @@ class LoginController extends Controller
 
     function login()
     {
+        $g = new \Google\Authenticator\GoogleAuthenticator();
+        
         $request = $this->app->request;
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->get('g-recaptcha'), $request->getIp());

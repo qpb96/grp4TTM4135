@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ttm4135\\' => array($baseDir . '/src'),
+    'Sonata\\GoogleAuthenticator\\' => array($vendorDir . '/sonata-project/google-authenticator/src'),
     'Slim\\Views\\' => array($vendorDir . '/slim/views'),
     'ReCaptcha\\' => array($vendorDir . '/google/recaptcha/src/ReCaptcha'),
+    'Google\\Authenticator\\' => array($vendorDir . '/sonata-project/google-authenticator/src'),
 );

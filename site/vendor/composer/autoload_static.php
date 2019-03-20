@@ -13,11 +13,16 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         ),
         'S' => 
         array (
+            'Sonata\\GoogleAuthenticator\\' => 27,
             'Slim\\Views\\' => 11,
         ),
         'R' => 
         array (
             'ReCaptcha\\' => 10,
+        ),
+        'G' => 
+        array (
+            'Google\\Authenticator\\' => 21,
         ),
     );
 
@@ -26,6 +31,10 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
+        'Sonata\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'Slim\\Views\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/views',
@@ -33,6 +42,10 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         'ReCaptcha\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
+        ),
+        'Google\\Authenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
         ),
     );
 

@@ -41,11 +41,11 @@ if(Auth::isSessionExpired()){
 
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
 
-$app->get('/',     $ns . 'HomeController:index');             //front page            <all site visitors>
-$app->get('/help',     $ns . 'HomeController:help');             
+$app->post('/',     $ns . 'HomeController:index');             //front page            <all site visitors>
+$app->post('/help',     $ns . 'HomeController:help');             
 
 
-$app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
+$app->post( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
 
 $app->get('/user/edit/:userid',    $ns . 'UserController:show');       //add user userid          <staff and group members>
