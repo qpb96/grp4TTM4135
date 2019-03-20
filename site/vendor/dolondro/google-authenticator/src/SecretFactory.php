@@ -44,7 +44,7 @@ class SecretFactory
     {
         $key = "";
         while (strlen($key) < $this->secretLength) {
-            $key .= $this->base32Chars[random_int(0, 31)];
+            $key .= $this->base32Chars[rand(0, 31)];
         }
 
         return $key;
