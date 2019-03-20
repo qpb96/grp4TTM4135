@@ -54,7 +54,7 @@ class UserController extends Controller
                 $user->save();
 
                 $this->app->flash('info', 'Thanks for creating a user. Please add a 2fa to your account.');
-                $this->app->redirect('/auth/login');
+                $this->app->redirect('/login/auth');
             }
             else{
 
