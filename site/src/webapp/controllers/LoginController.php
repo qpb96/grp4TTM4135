@@ -6,6 +6,7 @@ use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 
+
 class LoginController extends Controller
 {
     private $validation;

@@ -4,6 +4,7 @@ namespace ttm4135\webapp\controllers;
 
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
+use ReCaptcha\ReCaptcha;
 
 
 class HomeController extends Controller
@@ -16,7 +17,7 @@ class HomeController extends Controller
     function index()     
     {
         $this->hasSessionExpired();
-        
+        print(session_id());
         if (Auth::check()) {
             $user = Auth::user();
             $this->render('base.twig', ['user'=>$user]);
