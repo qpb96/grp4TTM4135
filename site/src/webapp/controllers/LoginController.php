@@ -42,7 +42,7 @@ class LoginController extends Controller
         $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $request->getIp());
           
         if (!$resp->isSuccess()) {
-            $this->app->redirect("Please check if you are a bot");
+            $this->app->flash("info", "Please check if you are a bot");
             $this->app->redirect("/login");
 
         }else{
