@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
 {
+    public static $files = array (
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
@@ -13,12 +17,20 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Util\\' => 22,
+            'Symfony\\Polyfill\\Php56\\' => 23,
             'Sonata\\GoogleAuthenticator\\' => 27,
             'Slim\\Views\\' => 11,
         ),
         'R' => 
         array (
             'ReCaptcha\\' => 10,
+        ),
+        'P' => 
+        array (
+            'PragmaRX\\Google2FA\\Tests\\' => 25,
+            'PragmaRX\\Google2FA\\' => 19,
+            'ParagonIE\\ConstantTime\\' => 23,
         ),
         'G' => 
         array (
@@ -31,6 +43,14 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
+        'Symfony\\Polyfill\\Util\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
+        ),
+        'Symfony\\Polyfill\\Php56\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
+        ),
         'Sonata\\GoogleAuthenticator\\' => 
         array (
             0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
@@ -42,6 +62,18 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         'ReCaptcha\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
+        ),
+        'PragmaRX\\Google2FA\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pragmarx/google2fa/tests',
+        ),
+        'PragmaRX\\Google2FA\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pragmarx/google2fa/src',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
         'Google\\Authenticator\\' => 
         array (
