@@ -66,12 +66,17 @@ class ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562
         ),
     );
 
+    public static $classMap = array (
+        'PHPGangsta_GoogleAuthenticator' => __DIR__ . '/..' . '/phpgangsta/googleauthenticator/PHPGangsta/GoogleAuthenticator.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3bf0b51cb1c1b15c688c1f80465b2562::$classMap;
 
         }, null, ClassLoader::class);
     }

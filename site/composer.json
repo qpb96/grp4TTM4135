@@ -3,7 +3,8 @@
         "slim/slim": "~2.0",
         "twig/twig": "~1.0",
         "slim/views": "^0.1.3",
-        "google/recaptcha": "~1.1"
+        "google/recaptcha": "~1.1",
+        "phpgangsta/googleauthenticator": "dev-master"
     },
     "autoload": {
         "psr-4": {
