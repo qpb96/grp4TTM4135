@@ -11,7 +11,7 @@ class AuthController extends Controller {
 
     function index() {
         $this->app->request();
-        $secretFactory = new GoogleAuthenticator\SecretFactory();
+        $secretFactory = new PHPGangsta_GoogleAuthenticator();
         $secret = $secretFactory->create("TTM4135gr18", "$asd");
         $auth_key = $secret->getSecretKey();
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
