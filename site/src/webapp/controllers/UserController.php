@@ -42,9 +42,6 @@ class UserController extends Controller
         $bio = $sanitizer->get('bio');
         $validation = new InputValidation();
 
-
-
-
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
             && $validation->isValidUserName($username) && $validation->passwordRequirement($password))
             {
@@ -56,8 +53,8 @@ class UserController extends Controller
                 $user->setBio($bio);
                 $user->save();
 
-                $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-                $this->app->redirect('/login');
+                $this->app->flash('info', 'Thanks for creating a user. Please add a 2fa to your account.');
+                $this->app->redirect('/auth/login');
             }
             else{
 

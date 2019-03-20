@@ -18,7 +18,7 @@ class AuthController extends Controller {
         $username = $user->getusername(); 
 
         $secretFactory = new GoogleAuthenticator\SecretFactory();
-        $secret = $secretFactory->create("TTM4135gr18", $username);
+        $secret = $secretFactory->create("TTM4135gr04", $username);
         $auth_key = $secret->getSecretKey();
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
@@ -28,6 +28,22 @@ class AuthController extends Controller {
 
     
  
-        }
+    }
+
+
+    function auth(){
+        $username = $_COOKIE['username'];
+        $user = User::findByUser($username);
+        $request = $this->app->request;
+        $input_handler = new InputHandler($request);
+        $code = $input_handler->get('code');
+        $auth_key = $user->getAuthKey();
+
+
+        $googleAuth = new GoogleAuthenticator();
+        $googleAuth->authenticate($auth_key, $code);
+
+    }
+
     
 }
