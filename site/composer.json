@@ -4,7 +4,8 @@
         "twig/twig": "~1.0",
         "slim/views": "^0.1.3",
         "google/recaptcha": "~1.1",
-        "phpgangsta/googleauthenticator": "dev-master"
+        "phpgangsta/googleauthenticator": "dev-master",
+        "sonata-project/google-authenticator": "^2.2"
     },
     "autoload": {
         "psr-4": {
