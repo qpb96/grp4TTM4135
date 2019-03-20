@@ -5,6 +5,7 @@ use ttm4135\webapp\Auth;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
+use ReCaptcha\ReCaptcha;
 
 
 class LoginController extends Controller
@@ -35,6 +36,17 @@ class LoginController extends Controller
 
     function login()
     {
+        
+            $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+            $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+          
+            if (!$resp->isSuccess()) {
+              print("rRIP");
+            }else{
+              // Everything works good ;) your contact has been saved.
+            }
+          
+
         $request = $this->app->request;
         $input_handler = new InputSanitizer($request);
         $this->validation = new InputValidation();
