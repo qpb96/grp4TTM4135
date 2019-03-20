@@ -106,7 +106,7 @@ class Auth
     {
         print("logout called");
         print(session_id());
-        print(" ");
+        print(" -------");
         if (self::check()) {
         session_unset();
         session_destroy();
