@@ -41,7 +41,7 @@ class LoginController extends Controller
         $username = $input_handler->get('username');
         $password = $input_handler->get('password');
 
-        if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
+        if(true){#$this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
             if ( Auth::checkCredentials($username, $password) ) {
                 $user = User::findByUser($username);
                 //Set session when user logs in
