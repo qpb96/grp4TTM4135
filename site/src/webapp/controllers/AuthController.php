@@ -5,8 +5,6 @@ namespace ttm4135\webapp\controllers;
 use PHPGangsta_GoogleAuthenticator;
 use ttm4135\webapp\Auth;
 
-require_once 'PHPGangsta_GoogleAuthenticator.php';
-
 class AuthController extends Controller {
 
 
