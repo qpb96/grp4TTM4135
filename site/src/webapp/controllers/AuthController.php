@@ -2,7 +2,8 @@
 
 namespace ttm4135\webapp\controllers;
 
-use PHPGangsta_GoogleAuthenticator;
+use Sonata\GoogleAuthenticator;
+use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
 
 class AuthController extends Controller {
@@ -10,9 +11,13 @@ class AuthController extends Controller {
 
     function index() {
         $this->app->request();
-        $ga = new PHPGangsta_GoogleAuthenticator();
-        $secret = $ga->createSecret();
-        echo "Secret is: ".$secret."\n\n";
+        $userid= $_SESSION['userid'];
+        $user = User::findById($userid);
+        $username = $user->getusername(); 
+    
+        $g = new GoogleAuthenticator();
+        $salt = '7WAO342QFANY6IKBF7L7SWEUU79WL3VMT920VB5NQMW';
+        $secret = $username.$salt;
        
         $auth_key = $secret->getSecretKey();
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
