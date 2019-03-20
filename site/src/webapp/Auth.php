@@ -98,7 +98,6 @@ class Auth
 
     //Set a session when user logs in
     static function login($user_id) {
-        session_regenerate_id();
         $_SESSION['userid'] = $user_id;
         }
     
@@ -112,7 +111,8 @@ class Auth
     {
         if (self::check()) {
         session_unset();
-        session_destroy();	
+        session_destroy();
+        session_regenerate_id(true);	
         self::$has_session_expired = true;
     }
 }
