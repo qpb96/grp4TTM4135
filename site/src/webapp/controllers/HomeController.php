@@ -26,7 +26,8 @@ class HomeController extends Controller
         }
     }
 
-    function help(){
+    function help()
+    {
      $this->render('help.twig', []);
     }
 
