@@ -43,7 +43,7 @@ class LoginController extends Controller
           
         if (!$resp->isSuccess()) {
             $this->app->redirect("Please check if you are a bot");
-            $this->app->redirect("\login");
+            $this->app->redirect("/login");
 
         }else{
             $input_handler = new InputSanitizer($request);
@@ -73,7 +73,7 @@ class LoginController extends Controller
             }
         }
           
-        
+
     }
 
     function logout()
