@@ -7,6 +7,8 @@ use ttm4135\webapp\Auth;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 
+
+
 class UserController extends Controller
 {
     function __construct()
@@ -39,6 +41,8 @@ class UserController extends Controller
         $email = $sanitizer->get('email');
         $bio = $sanitizer->get('bio');
         $validation = new InputValidation();
+
+
 
 
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
