@@ -1,0 +1,22 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h2>Help </h2>
+
+{{ flash.error|raw }} <br />
+
+<form action="" method="POST">
+
+<label>Username: </label>
+<input type="text" name="username" value=""> <br />
+<label>email: </label>
+<input type="text" name="email" value=""> <br />
+<label>text: </label>
+<input type="textarea" rows="5" cols="50" name="textbox" value=""> <br />
+
+
+<input type="submit" name="submit" value="Submit">
+</form>
+{% endblock %}
+
