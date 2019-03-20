@@ -6,7 +6,7 @@ use ttm4135\webapp\models\User;
 use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 use ReCaptcha\ReCaptcha;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as r;
 
 
 class LoginController extends Controller
@@ -38,11 +38,11 @@ class LoginController extends Controller
     function login()
     {
         $request = $this->app->request;
-        $requestIP = $request->getServerParam('REMOTE_ADDR');
+        
     
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
-        $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $requestIP);
+        $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $request->getIp());
           
         if (!$resp->isSuccess()) {
             print("rRIP");
