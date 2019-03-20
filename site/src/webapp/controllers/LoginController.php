@@ -38,47 +38,42 @@ class LoginController extends Controller
     function login()
     {
         $request = $this->app->request;
-        
-    
-
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->get('g-recaptcha-response'), $request->getIp());
           
         if (!$resp->isSuccess()) {
-            print("rRIP");
+            $this->app->redirect("Please check if you are a bot");
+            $this->app->redirect("\login");
+
         }else{
-          // Everything works good ;) your contact has been saved.
-        }
-          
-
-       
-        $input_handler = new InputSanitizer($request);
-        $this->validation = new InputValidation();
-        
-        $username = $input_handler->get('username');
-        $password = $input_handler->get('password');
-
-        if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
-            if ( Auth::checkCredentials($username, $password) ) {
-                $user = User::findByUser($username);
-                //Set session when user logs in
-		        UserController::setCookieUsername($username);	
-                Auth::login($user->getId());
-                $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
-                $this->app->redirect('/');
-            } else {
-                $this->app->flashNow('error', 'Incorrect username/password combination.');
-                $this->render('login.twig', []);
+            $input_handler = new InputSanitizer($request);
+            $this->validation = new InputValidation();
+            
+            $username = $input_handler->get('username');
+            $password = $input_handler->get('password');
+    
+            if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
+                if ( Auth::checkCredentials($username, $password) ) {
+                    $user = User::findByUser($username);
+                    //Set session when user logs in
+                    UserController::setCookieUsername($username);	
+                    Auth::login($user->getId());
+                    $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
+                    $this->app->redirect('/');
+                } else {
+                    $this->app->flashNow('error', 'Incorrect username/password combination.');
+                    $this->render('login.twig', []);
+                }
+            }
+            else{
+                print($username);
+                print($password);
+                $this->app->flash("error", "Invalid input in username or password");
+                $this->render('login.twig', []);            
             }
         }
-        else{
-            print($username);
-            print($password);
-            $this->app->flash("error", "Invalid input in username or password");
-            $this->render('login.twig', []);            
-        }
-
-
+          
+        
     }
 
     function logout()
