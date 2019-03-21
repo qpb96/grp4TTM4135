@@ -16,9 +16,9 @@ class AuthController extends Controller
 
     function index_login(){
         if(Auth::check()){   
+            $_SESSION['temp_uid'] = $_SESSION['userid'];
             Auth::logout();
             Auth::resetSessionExpired();
-            $_SESSION['temp_uid'] = $_SESSION['userid'];
             $this->render('login_auth.twig', []);
             echo $this::$uid."AWES";
         }
