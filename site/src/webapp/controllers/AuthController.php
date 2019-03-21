@@ -32,8 +32,8 @@ class AuthController extends Controller
         $code = $input_sanitizer->get('code');
         #$uid = $_SESSION['temp_uid'];
         $username = $input_sanitizer->get('username');
-        $user = User::findByUser($username);
-        $secret_key = User::getOfficialAuthKey($user->getId());
+        #$user = User::findByUser($username);
+        $secret_key = User::getOfficialAuthKey("asdsad");#$user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
