@@ -25,6 +25,7 @@ class AuthController extends Controller {
         $_SESSION['secret_key'] = $secret_key;
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
+        echo $_SESSION['secret_key'];
        # $user->setTempAuth($auth_key, $auth_url);
        #TODO add secret key to database
 
