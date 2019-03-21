@@ -5,6 +5,9 @@ namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\InputValidation;
+use ttm4135\webapp\InputSanitizer;
+
+
 
 class UserController extends Controller
 {
@@ -15,6 +18,7 @@ class UserController extends Controller
 
     function index()
     {
+        $this->hasSessionExpired();
         if (Auth::guest()) {
             $this->render('newUserForm.twig', []);
         } else {
@@ -24,18 +28,22 @@ class UserController extends Controller
         }
     }
 
+    static function setCookieUsername($username){
+    	parent::setCookie("username", $username, "/login");
+    }
+
     function create()
     {
         $request = $this->app->request;
-        $username = $request->post('username');
-        $password = $request->post('password');
-        $email = $request->post('email');
-        $bio = $request->post('bio');
+        $sanitizer = new InputSanitizer($request);
+        $username = $sanitizer->get('username');
+        $password = $sanitizer->get('password');
+        $email = $sanitizer->get('email');
+        $bio = $sanitizer->get('bio');
         $validation = new InputValidation();
 
-
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->isValidUserName($username) && $validation->isValidPassword($password))
+            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
@@ -45,43 +53,30 @@ class UserController extends Controller
                 $user->setBio($bio);
                 $user->save();
 
-                $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-                $this->app->redirect('/login');
+                $user = User::findByUser($username);
+                Auth::login($user->getId());
+                $this->app->flash('info', 'Thanks for creating a user. Please add a 2fa to your account.');
+                $this->app->redirect('/login/auth');
             }
             else{
 
-                $this->app->flash('error', 'Invalid input field.');
+                if(!$validation->passwordRequirement($password)){
+                    $this->app->flash('error', 'Password must be a minimum of 8 characters,
+                     contain at least 1 number,
+                     contain at least one uppercase character,
+                     and contain at least one lowercase character.');
+
+                } else if(!$validation->usernameRequirement($username)){
+                    $this->app->flash('error', 'Name is already taken or contain over over 20 characters');
+
+                } else{
+                    $this->app->flash('error', 'Invalid input field.');
+
+                }
                 $this->app->redirect('/register');
             }
 
 
-#        if($request->post('email'))
-#        {
-         #$email = $request->post('email');
-#         if($validation->validEmail($email)){
-#            $user->setEmail($email);
-#         }
-#          else{
-#            $this->app->flash('error', 'Email not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-#        if($request->post('bio'))
-#        {
-#          #$bio = $request->post('bio');
-#          if($validation->ValidBio($bio)){
-#            $user->setBio($bio);
-#          }
-#          else{
-#            $this->app->flash('error', 'Bio not valid');
-#            $this->app->redirect('/register');
-#          }
-#        }
-
-
-#       $user->save();
-#        $this->app->flash('info', 'Thanks for creating a user. You may now log in.');
-#        $this->app->redirect('/login');
     }
 
     function show($tuserid)

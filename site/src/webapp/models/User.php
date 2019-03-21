@@ -9,6 +9,12 @@ class User
     const DELETE_QUERY = "DELETE FROM users WHERE id='%s'";
     const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username='%s'";
     const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id='%s'";
+    const INSERT_AUTH = "UPDATE users SET auth_key='%s' WHERE id='%s'";
+    const UNINSERT_AUTH_KEY = "UPDATE users SET auth_key=NULL WHERE id='%s'";
+    const GET_OFFICIAL_AUTH_KEY = "SELECT auth_key FROM users WHERE id='%s'";
+    const FIND_AUTH = "SELECT auth_key FROM users WHERE id='%s'";
+
+
     protected $id = null;
     protected $username;
     protected $password;
@@ -40,35 +46,70 @@ class User
     /**
      * Insert or update a user object to db.
      */
-    function save()
-    {
-        if ($this->id === null) {
-            $query = sprintf(self::INSERT_QUERY,
-                $this->username,
-                $this->password,
-                $this->email,
-                $this->bio,
-                $this->isAdmin            );
-        } else {
-          $query = sprintf(self::UPDATE_QUERY,
-                $this->username,
-                $this->password,
-                $this->email,
-                $this->bio,
-                $this->isAdmin,
-                $this->id
-            );
-        }
+    // function save()
+    // {
+    //     if ($this->id === null) {
+    //         $query = sprintf(self::INSERT_QUERY,
+    //             $this->username,
+    //             $this->password,
+    //             $this->email,
+    //             $this->bio,
+    //             $this->isAdmin            );
+    //     } else {
+    //       $query = sprintf(self::UPDATE_QUERY,
+    //             $this->username,
+    //             $this->password,
+    //             $this->email,
+    //             $this->bio,
+    //             $this->isAdmin,
+    //             $this->id
+    //         );
+    //     }
+    //   return self::$app->db->exec($query);
+    // }
 
-        return self::$app->db->exec($query);
+    function save() {
+        if ($this->id === null) {
+            return self::create();
+        } else {
+            return self::update();
+        }
+        return false;
     }
 
-    function delete()
+    function create()
     {
-        $query = sprintf(self::DELETE_QUERY,
-            $this->id
-        );
-        return self::$app->db->exec($query);
+      $stmt = self::$app->db->prepare(self::INSERT_QUERY);
+      $stmt->bindParam(1, $this->username);
+      $stmt->bindParam(2, $this->password);
+      $stmt->bindParam(3, $this->email);
+      $stmt->bindParam(4, $this->bio);
+      $stmt->bindParam(5, $this->isAdmin);
+    	return $stmt->execute();
+    }
+
+    function update()
+    {
+      $stmt = self::$app->db->prepare(self::UPDATE_QUERY);
+      $stmt->bindParam(1, $this->username);
+      $stmt->bindParam(2, $this->password);
+      $stmt->bindParam(3, $this->email);
+      $stmt->bindParam(4, $this->bio);
+      $stmt->bindParam(5, $this->isAdmin);
+      return $stmt->execute();
+    }
+
+    // function delete()
+    // {
+    //     $query = sprintf(self::DELETE_QUERY,
+    //         $this->id
+    //     );
+    //     return self::$app->db->exec($query);
+    // }
+    function delete() {
+      $stmt = self::$app->db->prepare(self::DELETE_QUERY);
+      $stmt->bindParam(1, $this->id);
+      return $stmt->execute();
     }
 
     function getId()
@@ -130,6 +171,34 @@ class User
         $this->isAdmin = $isAdmin;
     }
 
+    static function insertAuthKey($key, $uid){
+      $stmt = self::$app->db->prepare(self::INSERT_AUTH_KEY);
+      $stmt->bindParam(1, $key);
+      $stmt->bindParam(2, $uid);
+      $stmt->execute();
+    }
+
+    function unInsertAuthKey($uid) {
+        $stmt = self::$app->db->prepare(self::UNINSERT_AUTH_KEY);
+        $stmt->bindParam(1, $uid);
+        $stmt->execute();
+    }
+    function getOfficialAuthKey($uid) {
+        $stmt = self::$app->db->prepare(self::GET_OFFICIAL_AUTH_KEY);
+        $stmt->bindParam(1, $uid);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['auth_key'];
+    }
+    function hasAuthKey() {
+	     $auth_key = self::getOfficialAuthKey();
+	     return $auth_key != null;
+    }
+
+    static function findAuthKey($uid){
+        $query = sprintf(self::FIND_AUTH, $uid);
+        return self::$app->db->exec($query);
+    }
 
     /**
      * Get user in db by userid
@@ -139,9 +208,10 @@ class User
      */
     static function findById($userid)
     {
-        $query = sprintf(self::FIND_BY_ID_QUERY, $userid);
-        $result = self::$app->db->query($query, \PDO::FETCH_ASSOC);
-        $row = $result->fetch();
+      $stmt = self::$app->db->prepare(self::FIND_BY_ID_QUERY);
+      $stmt->bindParam(1, $userid);
+      $stmt->execute();
+      $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if($row == false) {
             return null;
@@ -158,9 +228,10 @@ class User
      */
     static function findByUser($username)
     {
-        $query = sprintf(self::FIND_BY_NAME_QUERY, $username);
-        $result = self::$app->db->query($query, \PDO::FETCH_ASSOC);
-        $row = $result->fetch();
+      $stmt = self::$app->db->prepare(self::FIND_BY_NAME_QUERY);
+      $stmt->bindParam(1, $username);
+      $stmt->execute();
+      $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if($row == false) {
             return null;
@@ -169,20 +240,7 @@ class User
         return User::makeFromSql($row);
     }
 
-    
-    static function all()
-    {
-        $query = "SELECT * FROM users";
-        $results = self::$app->db->query($query);
 
-        $users = [];
-
-        foreach ($results as $row) {
-            $user = User::makeFromSql($row);
-            array_push($users, $user);
-        }
-
-        return $users;
     }
 
     static function makeFromSql($row)
@@ -193,7 +251,8 @@ class User
             $row['password'],
             $row['email'],
             $row['bio'],
-            $row['isadmin']
+            $row['isadmin'],
+            $row['auth_key']
         );
     }
 
@@ -201,4 +260,3 @@ class User
 
 
   User::$app = \Slim\Slim::getInstance();
-
