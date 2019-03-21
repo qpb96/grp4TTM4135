@@ -37,11 +37,11 @@ class AuthController extends Controller
         $username = $request->get('username');
         $code = $input_sanitizer->get('code');
         $user = User::findByUser($username);
-        echo $username."ssaDas";
+
 
         $username = $input_sanitizer->get('username');
         $user = User::findByUser($username);
-        $secret_key = User::getOfficialAuthKey("asdasd");#$user->getId());
+        $secret_key = User::getOfficialAuthKey($user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
