@@ -11,10 +11,12 @@ use ttm4135\webapp\InputSanitizer;
 
 class AuthController extends Controller 
 {
+    protected $uid;
 
 
     function index_login(){
         if(Auth::check()){   
+            self::$uid = $_SESSION['userid'];
             Auth::logout();
             Auth::resetSessionExpired();
             $this->render('login_auth.twig', []);
@@ -29,7 +31,7 @@ class AuthController extends Controller
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
         $uid = $_SESSION['userid'];
-        $secret_key = User::getOfficialAuthKey($uid);
+        $secret_key = User::getOfficialAuthKey(self::$uid);
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
