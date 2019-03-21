@@ -11,19 +11,9 @@ use ttm4135\webapp\models\User;
         function isValidUserName($username)
         {
         
-	    if($username == null || strlen($username)> 20){
-                return FALSE; 
-            }
-            else{
-                return TRUE;
-	    }
-          
-	}
+        # Check if username is already taken
+        $isNameUsed = User::findByUser($username);
 
-	function usernameRequirement($username){
-
-	    # Check if username is already taken
-	    $isNameUsed = User::findByUser($username);
 
 	    if($username == null || strlen($username)> 20 || $isNameUsed){
                 return FALSE; 
@@ -31,9 +21,8 @@ use ttm4135\webapp\models\User;
             else{
                 return TRUE;
 	    }
-
-	
-	}
+           
+        }
 
         function isValidPassword($password){
 

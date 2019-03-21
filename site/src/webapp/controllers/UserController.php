@@ -43,7 +43,7 @@ class UserController extends Controller
         $validation = new InputValidation();
 
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
+            && $validation->isValidUserName($username) && $validation->passwordRequirement($password))
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
@@ -62,11 +62,11 @@ class UserController extends Controller
 
                 if(!$validation->passwordRequirement($password)){
                     $this->app->flash('error', 'Password must be a minimum of 8 characters,
-                     contain at least 1 number,
-                     contain at least one uppercase character,
-                     and contain at least one lowercase character.');
+                    \n contain at least 1 number,
+                    \n	contain at least one uppercase character,
+                    \n	and contain at least one lowercase character.');
 
-                } else if(!$validation->usernameRequirement($username)){
+                } else if(!$validation->isValidUserName($username)){
                     $this->app->flash('error', 'Name is already taken or contain over over 20 characters');
 
                 } else{
