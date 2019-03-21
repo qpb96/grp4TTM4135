@@ -37,18 +37,16 @@ class AuthController extends Controller
         $username = $input_handler->get('username');
         $code = $input_handler->get('code');
         $user = User::findByUser($username);
-
+        Auth::login($user->getId());
+        
         $secret_key = User::getOfficialAuthKey($user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
-            session_destroy(); // Destroy temp_uid
-            echo $username."ssaDas";
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
         else{
-            echo $username."ssaDas";
             $this->app->flash("info", "Wrong code");
             $this->app->redirect("/auth");
         }
