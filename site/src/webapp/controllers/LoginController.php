@@ -75,7 +75,7 @@ class LoginController extends Controller
                                 $uid = $user->getId();
 
                                 if(User::hasAuthKey($uid)){
-                                    Auth::login($user->getId());
+                                    $_SESSION['userid'] = $uid;
                                     $this->app->flash('info', "Please verify that you are " . $user->getUsername() . ".");
                                     $this->app->redirect('/auth');
 
