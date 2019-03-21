@@ -14,7 +14,14 @@ class AuthController extends Controller
 
 
     function index_login(){
-        $this->render('login_auth.twig', []);
+        if(Auth::check()){   
+            Auth::logout();
+            Auth::resetSessionExpired();
+            $this->render('login_auth.twig', []);
+        }
+        else{
+            $this->app->redirect("/");
+        }
     }
 
     function verify_login(){
@@ -29,15 +36,12 @@ class AuthController extends Controller
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
-        elseif(strlen($code)>0){
+        else
             $this->app->flash("info", "Wrong code");
             $this->app->redirect("/auth");
+            $this->render('base.twig', []);
         }
-        else{
-            Auth::logout();
-            $this->app->redirect("/");
-        }
-    }
+    
 
 
         
