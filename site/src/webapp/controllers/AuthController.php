@@ -11,7 +11,7 @@ use Sonata\GoogleAuthenticator\GoogleAuthenticator as SonataGoogleAuthenticator;
 
 class AuthController extends Controller {
 
-    protected $secret_key;
+    private $secret_key = null;
 
 
     function index() {
