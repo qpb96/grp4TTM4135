@@ -18,7 +18,7 @@ class AuthController extends Controller
         if(Auth::check()){ 
             $userid = $_SESSION['userid'];
             $user = User::findById($userid);  
-            $username = $user->getId();
+            $username = $user->getUserName();
             #$temp_uid= $_SESSION['userid'];
             Auth::logout();
             Auth::resetSessionExpired();
