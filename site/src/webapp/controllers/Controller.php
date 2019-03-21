@@ -3,6 +3,8 @@
 namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 class Controller
+header('X-Frame-Options: SAMEORIGIN');
+
 {
     protected $app;
     const COOKIE_LIFESPAN = 86400*30; //86400 = 1 day
