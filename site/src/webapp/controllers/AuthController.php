@@ -33,14 +33,11 @@ class AuthController extends Controller
 
     function verify_login(){
         $request = $this->app->request;
-        $input_sanitizer = new InputSanitizer($request);
-        $username = $request->get('username');
-        $code = $input_sanitizer->get('code');
+        $input_handler = new InputSanitizer($request);
+        $username = $input_handler->get('username');
+        $code = $input_handler->get('code');
         $user = User::findByUser($username);
 
-
-        $username = $input_sanitizer->get('username');
-        $user = User::findByUser($username);
         $secret_key = User::getOfficialAuthKey($user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
