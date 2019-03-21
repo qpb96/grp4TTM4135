@@ -19,6 +19,7 @@ class AuthController extends Controller
             $this::$uid = $_SESSION['userid'];
             Auth::logout();
             Auth::resetSessionExpired();
+            $_SESSION['userid'] = $this::$uid;
             $this->render('login_auth.twig', []);
             echo $this::$uid."AWES";
         }
@@ -31,9 +32,10 @@ class AuthController extends Controller
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
-#        $uid = $_SESSION['userid'];
-            echo $this::$uid."AWES";
-        $secret_key = User::getOfficialAuthKey($this::$uid);
+        $uid = $_SESSION['userid'];
+        echo $uid;
+
+        $secret_key = User::getOfficialAuthKey($uid);
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
