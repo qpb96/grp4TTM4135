@@ -28,10 +28,15 @@ class AuthController extends Controller {
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
-        else{
+        elseif(strlen($code)>0){
             $this->app->flash("info", "Wrong code");
             $this->app->redirect("/auth");
         }
+        else{
+            Auth::logout();
+            $this->app->redirect("/");
+        }
+    }
 
 
         
