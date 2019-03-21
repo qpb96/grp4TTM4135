@@ -22,7 +22,8 @@ class AuthController extends Controller {
 
         $secretFactory = new GoogleAuthenticator\SecretFactory();
         $secret = $secretFactory->create("TTM4135gr04", $username);
-        self::$secret_key = $secret->getSecretKey();
+        $secret_key = $secret->getSecretKey();
+        self::$secret_key = $secret_key;
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
        # $user->setTempAuth($auth_key, $auth_url);
