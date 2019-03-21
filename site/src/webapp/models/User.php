@@ -4,15 +4,15 @@ namespace ttm4135\webapp\models;
 
 class User
 {
-    const INSERT_QUERY = "INSERT INTO users(username, password, email, bio, isadmin) VALUES('%s', '%s', '%s' , '%s' , '%s')";
-    const UPDATE_QUERY = "UPDATE users SET username='%s', password='%s', email='%s', bio='%s', isadmin='%s' WHERE id='%s'";
-    const DELETE_QUERY = "DELETE FROM users WHERE id='%s'";
-    const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username='%s'";
-    const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id='%s'";
-    const INSERT_AUTH = "UPDATE users SET auth_key='%s' WHERE id='%s'";
-    const UNINSERT_AUTH_KEY = "UPDATE users SET auth_key=NULL WHERE id='%s'";
-    const GET_OFFICIAL_AUTH_KEY = "SELECT auth_key FROM users WHERE id='%s'";
-    const FIND_AUTH = "SELECT auth_key FROM users WHERE id='%s'";
+    const INSERT_QUERY = "INSERT INTO users(username, password, email, bio, isadmin) VALUES(?, ?, ? , ? , ?)";
+    const UPDATE_QUERY = "UPDATE users SET username=?, password=?, email=?, bio=?, isadmin=? WHERE id=?";
+    const DELETE_QUERY = "DELETE FROM users WHERE id=?";
+    const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username=?";
+    const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id=?";
+    const INSERT_AUTH = "UPDATE users SET auth_key=? WHERE id=?";
+    const UNINSERT_AUTH_KEY = "UPDATE users SET auth_key=NULL WHERE id=?";
+    const GET_OFFICIAL_AUTH_KEY = "SELECT auth_key FROM users WHERE id=?";
+    const FIND_AUTH = "SELECT auth_key FROM users WHERE id=?";
 
 
     protected $id = null;
@@ -241,8 +241,6 @@ class User
     }
 
 
-    }
-
     static function makeFromSql($row)
     {
         return User::make(
@@ -252,7 +250,7 @@ class User
             $row['email'],
             $row['bio'],
             $row['isadmin'],
-            $row['auth_key']
+            $row['auth_key'],
         );
     }
 
