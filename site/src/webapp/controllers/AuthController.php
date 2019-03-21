@@ -30,8 +30,7 @@ class AuthController extends Controller {
         }
         else{
             $this->app->flash("info", "Wrong code");
-            $this->app->redirect("/auth")
-
+            $this->app->redirect("/auth");
         }
 
 
