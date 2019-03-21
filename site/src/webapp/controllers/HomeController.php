@@ -17,7 +17,6 @@ class HomeController extends Controller
     function index()     
     {
         $this->hasSessionExpired();
-        print(session_id());
         if (Auth::check()) {
             $user = Auth::user();
             $this->render('base.twig', ['user'=>$user]);
