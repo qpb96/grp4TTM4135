@@ -182,7 +182,7 @@ class User
         $stmt->bindParam(1, $uid);
         $stmt->execute();
     }
-    function getOfficialAuthKey($uid) {
+    static function getOfficialAuthKey($uid) {
         $stmt = self::$app->db->prepare(self::GET_OFFICIAL_AUTH_KEY);
         $stmt->bindParam(1, $uid);
         $stmt->execute();
