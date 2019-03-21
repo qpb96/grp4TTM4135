@@ -3,7 +3,6 @@
 namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\Auth;
 class Controller
-header('X-Frame-Options: SAMEORIGIN');
 
 {
     protected $app;
