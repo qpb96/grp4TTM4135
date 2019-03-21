@@ -38,9 +38,9 @@ class AuthController extends Controller
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
             #session_destroy(); // Destroy temp_uid
-            Auth::login($user->getId());
-            $this->app->flash("info", "Successful Verification");
-            $this->app->redirect("/");
+            #Auth::login($user->getId());
+            #$this->app->flash("info", "Successful Verification");
+            #$this->app->redirect("/");
         }
         else
             $this->app->flash("info", "Wrong code");
