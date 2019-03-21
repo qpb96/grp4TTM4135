@@ -11,7 +11,7 @@ use ttm4135\webapp\InputSanitizer;
 
 class AuthController extends Controller 
 {
-    protected $uid;
+    protected $uid = null;
 
 
     function index_login(){
