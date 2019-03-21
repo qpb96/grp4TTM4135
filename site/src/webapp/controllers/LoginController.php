@@ -70,17 +70,20 @@ class LoginController extends Controller
                         if($this->validation->isValidUserName($username) == TRUE && $this->validation->isValidPassword($password)){
                             if ( Auth::checkCredentials($username, $password) ) {
                                 $user = User::findByUser($username);
-                                //Set session when user logs in
-                                UserController::setCookieUsername($username);
+
                                 $uid = $user->getId();
 
                                 if(User::hasAuthKey($uid)){
+                                //Set session when user logs in
+                                UserController::setCookieUsername($username);
                                     $_SESSION['userid'] = $uid;
                                     $this->app->flash('info', "Please verify that you are " . $user->getUsername() . ".");
                                     $this->app->redirect('/auth');
 
                                 }
                                 else{
+                                    //Set session when user logs in
+                                    UserController::setCookieUsername($username);
                                     echo $uid; 
                                     Auth::login($user->getId());
                                     $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
