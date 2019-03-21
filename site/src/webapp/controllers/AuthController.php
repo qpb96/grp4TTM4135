@@ -6,7 +6,7 @@ use Dolondro\GoogleAuthenticator;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
 use ttm4135\webapp\InputSanitizer;
-use Sonata\GoogleAuthenticator\GoogleAuthenticator as SonataGoogleAuthenticator;
+
 
 
 class AuthController extends Controller {
@@ -39,6 +39,7 @@ class AuthController extends Controller {
     function auth(){
         $username = $_COOKIE['username'];
         $user = User::findByUser($username);
+        $uid = $user->getId();
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
@@ -52,7 +53,8 @@ class AuthController extends Controller {
             
         }
         else{
-            echo $code." ".$secret_key;
+            User::insertAuthKey($secret_key, $uid);
+            unset($_SESSION['secret_key']);
             $this->app->flash("info", "Authenticator has been successfully set");
             $this->app->redirect("/");
         }

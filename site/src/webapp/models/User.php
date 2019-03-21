@@ -9,6 +9,8 @@ class User
     const DELETE_QUERY = "DELETE FROM users WHERE id='%s'";
     const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username='%s'";
     const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id='%s'";
+    const INSERT_AUTH = "UPDATE users SET auth_key='%s' WHERE id='%s'";
+
     protected $id = null;
     protected $username;
     protected $password;
@@ -130,6 +132,10 @@ class User
         $this->isAdmin = $isAdmin;
     }
 
+    static function insertAuthKey($key, $uid){
+        $query = sprintf(self::INSERT_AUTH, $$key, $uid);
+        return self::$app->db->exec($query);
+    }
 
     /**
      * Get user in db by userid
@@ -193,7 +199,8 @@ class User
             $row['password'],
             $row['email'],
             $row['bio'],
-            $row['isadmin']
+            $row['isadmin'],
+            $row['auth_key']
         );
     }
 
