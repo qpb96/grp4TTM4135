@@ -30,11 +30,12 @@ class AuthController extends Controller
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
-        $uid = $_SESSION['userid'];
+#        $uid = $_SESSION['userid'];
         $secret_key = User::getOfficialAuthKey(self::$uid);
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
+            Auth::login();
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
