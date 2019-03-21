@@ -46,15 +46,15 @@ class AuthController extends Controller {
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $googleAuth->authenticate($secret_key, $code);
 
-        if($googleAuth){
-            echo $code." ".$secret_key;
-            $this->app->flash("info", "Authenticator has been successfully set");
-            $this->app->redirect("/");
+        if(!$googleAuth){
+            $this->app->flash("info", "Invalid code");
+            $this->app->redirect("/login/auth");
             
         }
         else{
-            $this->app->flash("info", "Invalid code");
-            $this->app->redirect("/login/auth");
+            echo $code." ".$secret_key;
+            $this->app->flash("info", "Authenticator has been successfully set");
+            $this->app->redirect("/");
         }
 
     }
