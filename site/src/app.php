@@ -49,7 +49,7 @@ $app->get( '/login', $ns . 'LoginController:index');        //login form        
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
 
 $app->get('/auth', $ns . 'AuthController:index_login');
-$app->post('/auth', $ns . 'AuthController:index_login');
+$app->post('/auth', $ns . 'AuthController:verify_login');
 $app->get('/login/auth', $ns . 'AuthController:index');
 $app->post('/login/auth', $ns . 'AuthController:auth');
 
