@@ -189,12 +189,12 @@ class User
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['auth_key'];
     }
-    static function hasAuthKey($uid) {
+    function hasAuthKey($uid) {
 	     $auth_key = self::getOfficialAuthKey($uid);
 	     return $auth_key != null;
     }
 
-    static function findAuthKey($uid){
+    function findAuthKey($uid){
       $stmt = self::$app->db->prepare(self::FIND_AUTH);
       $stmt->bindParam(1, $uid);
       $stmt->execute();
