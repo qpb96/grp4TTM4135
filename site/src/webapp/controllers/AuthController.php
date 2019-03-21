@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     function index_login(){
         if(Auth::check()){ 
-            $userid = [$_SESSION['userid']];
+            $userid = $_SESSION['userid'];
             $user = User::findById($userid);  
             $username = $user->getId();
             #$temp_uid= $_SESSION['userid'];
