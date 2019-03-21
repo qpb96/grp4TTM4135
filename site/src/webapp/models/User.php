@@ -250,7 +250,7 @@ class User
             $row['email'],
             $row['bio'],
             $row['isadmin'],
-            $row['auth_key'],
+            $row['auth_key']
         );
     }
 
