@@ -68,9 +68,9 @@ class LoginController extends Controller
                             if(User::hasAuthKey($uid)){
                             //Set session when user logs in
                             UserController::setCookieUsername($username);
-                            #$_SESSION['userid'] = $uid;
+                            $_SESSION['userid'] = $uid;
                             $this->app->flash('info', "Please verify that you are " . $user->getUsername() . ".");
-                            $this->app->render('login_auth.twig',['username' => $username]);
+                            $this->app->redirect("\auth")
                             }
                             else{
                                 //Set session when user logs in
