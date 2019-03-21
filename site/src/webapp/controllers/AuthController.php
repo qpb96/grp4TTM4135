@@ -41,8 +41,9 @@ class AuthController extends Controller
             $this->app->redirect("/");
         }
         else
+            Auth::login($this::$uid);
             $this->app->flash("info", "Wrong code");
-            $this->app->redirect("/auth");
+            $this->render('login_auth.twig', []);
         }
     
 
