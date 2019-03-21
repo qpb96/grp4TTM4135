@@ -31,20 +31,20 @@ class AuthController extends Controller
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
         #$uid = $_SESSION['temp_uid'];
-        $uid = $input_sanitizer->get('username');
-        $secret_key = User::getOfficialAuthKey($uid);
+        $username = $input_sanitizer->get('username');
+        $user = User::findByUser($username);
+        $secret_key = User::getOfficialAuthKey($user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
-            session_destroy(); // Destroy temp_uid
-            Auth::login($this::$uid);
+            #session_destroy(); // Destroy temp_uid
+            Auth::login($user->getId());
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
         else
-            Auth::login($uid);
             $this->app->flash("info", "Wrong code");
-            $this->app->redirect("\auth");
+            $this->app->redirect("/auth");
         }
     
 
