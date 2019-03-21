@@ -5,10 +5,12 @@ namespace ttm4135\webapp\controllers;
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
 use ReCaptcha\ReCaptcha;
+header('X-Frame-Options: DENY');
 
 
 class HomeController extends Controller
 {
+
     function __construct()
     {
         parent::__construct();

@@ -48,6 +48,7 @@ $app->post('/help',     $ns . 'HomeController:help');
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
 $app->post('/login', $ns . 'LoginController:login');       //login action          <all site visitors>
 
+$app->get('/auth', $ns . 'AuthController:index_login');
 $app->get('/login/auth', $ns . 'AuthController:index');
 $app->post('/login/auth', $ns . 'AuthController:auth');
 

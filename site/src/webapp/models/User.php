@@ -12,6 +12,7 @@ class User
     const INSERT_AUTH = "UPDATE users SET auth_key='%s' WHERE id='%s'";
     const UNINSERT_AUTH_KEY = "UPDATE users SET auth_key=NULL WHERE id='%s'";
     const GET_OFFICIAL_AUTH_KEY = "SELECT auth_key FROM users WHERE id='%s'";
+    const FIND_AUTH = "SELECT auth_key FROM users WHERE id='%s'";
 
 
     protected $id = null;
@@ -192,6 +193,11 @@ class User
     function hasAuthKey() {
 	     $auth_key = self::getOfficialAuthKey();
 	     return $auth_key != null;
+    }
+
+    static function findAuthKey($uid){
+        $query = sprintf(self::FIND_AUTH, $uid);
+        return self::$app->db->exec($query);
     }
 
     /**

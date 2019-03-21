@@ -12,6 +12,10 @@ use ttm4135\webapp\InputSanitizer;
 class AuthController extends Controller {
 
 
+    function index_login(){
+        $this->render('login_auth.twig', []);
+    }
+
 
     function index() {
         $this->app->request();
@@ -30,16 +34,15 @@ class AuthController extends Controller {
        #TODO add secret key to database
 
         $this->render('auth.twig', ['url'=>$auth_url]);
-
-    
  
     }
 
 
     function auth(){
-        $username = $_COOKIE['username'];
-        $user = User::findByUser($username);
-        $uid = $user->getId();
+        #$username = $_SESSION['username'];
+        #$user = User::findByUser($username);
+        echo $_SESSION['userid'];
+        $uid = $_SESSION['userid'];
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
