@@ -19,9 +19,10 @@ class AuthController extends Controller
             $userid = $_SESSION['userid'];
             $user = User::findById($userid);  
             $username = $user->getUsername();
-            #$temp_uid= $_SESSION['userid'];
+            
             Auth::logout();
             Auth::resetSessionExpired();
+            $_SESSION['temp_uid']= $userid;
             $this->app->render('login_auth.twig',['username' => $username]);
         }
         else{
@@ -33,20 +34,20 @@ class AuthController extends Controller
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
-        #$uid = $_SESSION['temp_uid'];
-        $username = $input_sanitizer->get('username');
-        $user = User::findByUser($username);
-        $secret_key = User::getOfficialAuthKey($user->getId());
+        $uid = $_SESSION['temp_uid'];
+        #$username = $input_sanitizer->get('username');
+        #$user = User::findByUser($username);
+        $secret_key = User::getOfficialAuthKey($uid);#$user->getId());
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
             session_destroy(); // Destroy temp_uid
-            Auth::login($user->getId());
+            Auth::login($uid);#$user->getId());
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
         else{
-            Auth::login($user->getId());
+            Auth::login($uid);#$user->getId());
             $this->app->flash("info", "Wrong code");
             $this->app->redirect("/auth");
         }
