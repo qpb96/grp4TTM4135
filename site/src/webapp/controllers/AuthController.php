@@ -9,7 +9,8 @@ use ttm4135\webapp\InputSanitizer;
 
 
 
-class AuthController extends Controller {
+class AuthController extends Controller 
+{
 
 
     function index_login(){
@@ -40,7 +41,7 @@ class AuthController extends Controller {
 
 
         
-    }
+    
 
 
     function index() {
@@ -62,7 +63,6 @@ class AuthController extends Controller {
         $this->render('auth.twig', ['url'=>$auth_url]);
  
     }
-
 
     function auth(){
         #$username = $_SESSION['username'];
@@ -89,6 +89,7 @@ class AuthController extends Controller {
         }
 
     }
+}
 
     
-}
+
