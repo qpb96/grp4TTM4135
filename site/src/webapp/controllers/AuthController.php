@@ -20,6 +20,7 @@ class AuthController extends Controller
             Auth::logout();
             Auth::resetSessionExpired();
             $this->render('login_auth.twig', []);
+            echo $this::$uid."AWES";
         }
         else{
             $this->app->redirect("/");
@@ -31,7 +32,7 @@ class AuthController extends Controller
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
 #        $uid = $_SESSION['userid'];
-        $secret_key = User::getOfficialAuthKey(self::$uid);
+        $secret_key = User::getOfficialAuthKey($this::$uid);
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
@@ -42,7 +43,6 @@ class AuthController extends Controller
         else
             $this->app->flash("info", "Wrong code");
             $this->app->redirect("/auth");
-            $this->render('base.twig', []);
         }
     
 
