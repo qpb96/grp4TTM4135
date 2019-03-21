@@ -139,7 +139,7 @@ class User
     }
 
     static function findAuthKey($uid){
-        $query = sprintf(self::INSERT_AUTH, $uid);
+        $query = sprintf(self::FIND_AUTH, $uid);
         return self::$app->db->exec($query);
     }
 
