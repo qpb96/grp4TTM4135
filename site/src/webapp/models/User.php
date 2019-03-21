@@ -9,7 +9,7 @@ class User
     const DELETE_QUERY = "DELETE FROM users WHERE id=?";
     const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username=?";
     const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id=?";
-    const INSERT_AUTH = "UPDATE users SET auth_key=? WHERE id=?";
+    const INSERT_AUTH_KEY = "UPDATE users SET auth_key=? WHERE id=?";
     const UNINSERT_AUTH_KEY = "UPDATE users SET auth_key=NULL WHERE id=?";
     const GET_OFFICIAL_AUTH_KEY = "SELECT auth_key FROM users WHERE id=?";
     const FIND_AUTH = "SELECT auth_key FROM users WHERE id=?";
