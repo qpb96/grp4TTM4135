@@ -16,11 +16,10 @@ class AuthController extends Controller
 
     function index_login(){
         if(Auth::check()){   
-            $temp_uid= $_SESSION['userid'];
+            #$temp_uid= $_SESSION['userid'];
             Auth::logout();
             Auth::resetSessionExpired();
             $this->render('login_auth.twig', []);
-            $_SESSION['temp_uid'] = $temp_uid;
         }
         else{
             $this->app->redirect("/");
@@ -31,7 +30,8 @@ class AuthController extends Controller
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
-        $uid = $_SESSION['temp_uid'];
+        #$uid = $_SESSION['temp_uid'];
+        $uid = $input_sanitizer->get('username');
         $secret_key = User::getOfficialAuthKey($uid);
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);

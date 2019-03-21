@@ -70,7 +70,7 @@ class LoginController extends Controller
                             UserController::setCookieUsername($username);
                             $_SESSION['userid'] = $uid;
                             $this->app->flash('info', "Please verify that you are " . $user->getUsername() . ".");
-                            $this->app->redirect('/auth');
+                            $this->app->render('login_auth.twig',['username' => username]);
                             }
                             else{
                                 //Set session when user logs in
