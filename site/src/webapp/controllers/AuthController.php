@@ -37,7 +37,7 @@ class AuthController extends Controller
         $username = $input_sanitizer->get('username');
         $code = $input_sanitizer->get('code');
         $user = User::findByUser($username);
-        echo $username;
+        echo $username."ssaDas";
 
         $username = $input_sanitizer->get('username');
         $user = User::findByUser($username);
