@@ -11,7 +11,6 @@ use Sonata\GoogleAuthenticator\GoogleAuthenticator as SonataGoogleAuthenticator;
 
 class AuthController extends Controller {
 
-    private $secret_key = null;
 
 
     function index() {
@@ -23,7 +22,7 @@ class AuthController extends Controller {
         $secretFactory = new GoogleAuthenticator\SecretFactory();
         $secret = $secretFactory->create("TTM4135gr04", $username);
         $secret_key = $secret->getSecretKey();
-        self::$secret_key = $secret_key;
+        $_SESSION['secret_key'] = $secret_key;
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
        # $user->setTempAuth($auth_key, $auth_url);
@@ -42,7 +41,7 @@ class AuthController extends Controller {
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
-        $secret_key = self::$secret_key;
+        $secret_key = $_SESSION['secret_key'];
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $googleAuth->authenticate($secret_key, $code);
 
@@ -52,7 +51,7 @@ class AuthController extends Controller {
             
         }
         else{
-            $this->app->flash("info", "Please set an Authenticator to your account");
+            $this->app->flash("info", "Invalid code");
             $this->app->redirect("/login/auth");
         }
 
