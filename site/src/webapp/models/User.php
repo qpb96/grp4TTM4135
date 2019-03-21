@@ -10,6 +10,7 @@ class User
     const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username='%s'";
     const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id='%s'";
     const INSERT_AUTH = "UPDATE users SET auth_key='%s' WHERE id='%s'";
+    const FIND_AUTH = "SELECT auth_key FROM users WHERE id='%s'";
 
     protected $id = null;
     protected $username;
@@ -134,6 +135,11 @@ class User
 
     static function insertAuthKey($key, $uid){
         $query = sprintf(self::INSERT_AUTH, $key, $uid);
+        return self::$app->db->exec($query);
+    }
+
+    static function findAuthKey($uid){
+        $query = sprintf(self::INSERT_AUTH, $uid);
         return self::$app->db->exec($query);
     }
 

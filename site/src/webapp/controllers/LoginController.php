@@ -71,10 +71,18 @@ class LoginController extends Controller
                             if ( Auth::checkCredentials($username, $password) ) {
                                 $user = User::findByUser($username);
                                 //Set session when user logs in
-                                UserController::setCookieUsername($username);	
-                                Auth::login($user->getId());
-                                $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
-                                $this->app->redirect('/');
+                                UserController::setCookieUsername($username);
+                                $uid = $user->getId();
+                                if(User::findAuthKey($uid) != null){
+                                    $this->app->flash('info', "Please verify that you are" . $user->getUsername() . ".");
+                                    $this->app->redirect('/auth');
+
+                                }
+                                else{
+                                    Auth::login($user->getId());
+                                    $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
+                                    $this->app->redirect('/');
+                                }
                             } else {
                                 $this->app->flashNow('error', 'Incorrect username/password combination.');
                                 $this->render('login.twig', []);
