@@ -74,7 +74,6 @@ class User
         } else {
             return self::update();
         }
-        return false;
     }
 
     function create()
@@ -178,7 +177,7 @@ class User
       $stmt->execute();
     }
 
-    function unInsertAuthKey($uid) {
+    static function unInsertAuthKey($uid) {
         $stmt = self::$app->db->prepare(self::UNINSERT_AUTH_KEY);
         $stmt->bindParam(1, $uid);
         $stmt->execute();
@@ -190,14 +189,15 @@ class User
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['auth_key'];
     }
-    function hasAuthKey() {
+    static function hasAuthKey() {
 	     $auth_key = self::getOfficialAuthKey();
 	     return $auth_key != null;
     }
 
     static function findAuthKey($uid){
-        $query = sprintf(self::FIND_AUTH, $uid);
-        return self::$app->db->exec($query);
+      $stmt = self::$app->db->prepare(self::FIND_AUTH);
+      $stmt->bindParam(1, $uid);
+      $stmt->execute();
     }
 
     /**
@@ -250,7 +250,7 @@ class User
             $row['email'],
             $row['bio'],
             $row['isadmin'],
-            //$row['auth_key']
+            $row['auth_key']
         );
     }
 
