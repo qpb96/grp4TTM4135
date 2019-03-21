@@ -44,9 +44,9 @@ class AuthController extends Controller {
         $code = $input_sanitizer->get('code');
         $secret_key = $_SESSION['secret_key'];
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
-        $valid_auth = $googleAuth->authenticate($secret_key, $code);
+        $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
 
-        if(!$valid_auth){
+        if(!$is_valid_auth){
             $this->app->flash("info", "Invalid code");
             $this->app->redirect("/login/auth");
             
