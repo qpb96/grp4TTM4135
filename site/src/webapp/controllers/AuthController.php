@@ -39,9 +39,10 @@ class AuthController extends Controller {
 
 
     function auth(){
-        $username = $_COOKIE['username'];
-        $user = User::findByUser($username);
-        $uid = $user->getId();
+        #$username = $_SESSION['username'];
+        #$user = User::findByUser($username);
+        echo $_SESSION['userid'];
+        $uid = $_SESSION['userid'];
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
         $code = $input_sanitizer->get('code');
