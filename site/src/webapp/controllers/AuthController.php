@@ -36,7 +36,7 @@ class AuthController extends Controller
         $googleAuth = new GoogleAuthenticator\GoogleAuthenticator();
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
         if($is_valid_auth){
-            Auth::login();
+            Auth::login($this::$uid);
             $this->app->flash("info", "Successful Verification");
             $this->app->redirect("/");
         }
