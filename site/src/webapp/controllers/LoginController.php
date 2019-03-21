@@ -74,12 +74,13 @@ class LoginController extends Controller
                                 UserController::setCookieUsername($username);
                                 $uid = $user->getId();
 
-                                if(strlen(User::findAuthKey($uid)) > 5){
+                                if(User::hasAuthKey($uid)){
                                     $this->app->flash('info', "Please verify that you are" . $user->getUsername() . ".");
                                     $this->app->redirect('/auth');
 
                                 }
                                 else{
+                                    echo $uid; 
                                     Auth::login($user->getId());
                                     $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
                                     $this->app->redirect('/');
