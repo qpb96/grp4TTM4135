@@ -73,7 +73,8 @@ class LoginController extends Controller
                                 //Set session when user logs in
                                 UserController::setCookieUsername($username);
                                 $uid = $user->getId();
-                                if(User::findAuthKey($uid) != null){
+
+                                if(strlen(User::findAuthKey($uid)) > 5){
                                     $this->app->flash('info', "Please verify that you are" . $user->getUsername() . ".");
                                     $this->app->redirect('/auth');
 
