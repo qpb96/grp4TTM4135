@@ -7,7 +7,7 @@ use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\Request as r;
-header('X-Frame-Options: SAMEORIGIN');
+header('X-Frame-Options: DENY');
 
 class LoginController extends Controller
 {
