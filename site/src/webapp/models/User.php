@@ -133,7 +133,7 @@ class User
     }
 
     static function insertAuthKey($key, $uid){
-        $query = sprintf(self::INSERT_AUTH, $$key, $uid);
+        $query = sprintf(self::INSERT_AUTH, $key, $uid);
         return self::$app->db->exec($query);
     }
 
