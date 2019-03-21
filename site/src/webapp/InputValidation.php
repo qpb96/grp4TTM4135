@@ -15,7 +15,7 @@ use ttm4135\webapp\models\User;
         $isNameUsed = User::findByUser($username);
 
 
-	    if($username == null || strlen($username)> 20 || $isNameUsed){
+	    if($username == null || strlen($username)> 20 ){
                 return FALSE; 
             }
             else{
