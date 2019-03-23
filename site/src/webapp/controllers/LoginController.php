@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        $test = $request->request->get('_token');
+        $test = $request->request->post('_csrf_token');
         echo "test: {$test}";
 
         if ($this->isCsrfTokenValid('some-name', $test)) {

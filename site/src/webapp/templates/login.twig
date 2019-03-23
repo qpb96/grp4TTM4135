@@ -9,9 +9,6 @@
 
 <form action="" method="POST">
 
-    {{ csrfInput() }}
-
-
 <label>Username: </label>
 <input type="text" name="username" value ={{username}} > <br />
 <label>Password: </label>
@@ -19,9 +16,12 @@
 <div name="g-recaptcha" class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="callback"></div></div>
 <input type="submit" name="submit" value="Log in">
 
+<input type="hidden" name="_csrf_token" value="{{ Auth::generateToken('_token')}}" />
 
 
 
 </form>
 {% endblock %}
+
+
 
