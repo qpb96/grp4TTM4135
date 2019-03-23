@@ -136,11 +136,12 @@ class Auth
 
         $secretKey = 'gsfhs154aergz2#';
         if ( !session_id() ) {
-          #  session_start();
+            session_start();
         }
         $sessionId = session_id();
 
-        return sha1( $formName.$secretKey );
+        $length = 32;
+        $_SESSION['token'] = sha1($sessionId.$formName.$secretKey);
     
     }
 

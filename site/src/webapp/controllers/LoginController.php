@@ -45,10 +45,10 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        $test = $request->request->post('_csrf_token');
+        $test = $request->request->post('csrf_token');
         echo "test: {$test}";
 
-        if ($this->isCsrfTokenValid('some-name', $test)) {
+        if ($this->isCsrfTokenValid('protectedForm', $test)) {
             echo "CSRF WORKS!";
 
         } else {
