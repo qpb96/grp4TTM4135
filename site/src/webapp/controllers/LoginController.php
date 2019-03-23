@@ -46,7 +46,7 @@ class LoginController extends Controller
 
         if ( !empty( $_POST['csrf_token'] ) ) {
 
-            if( checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
+            if( Auth::checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
                 echo "CSRF WORKS!";
 
             } else { 

@@ -140,8 +140,7 @@ class Auth
         }
         $sessionId = session_id();
 
-        $length = 32;
-        $_SESSION['token'] = sha1($sessionId.$formName.$secretKey);
+        return sha1($sessionId.$formName.$secretKey);
     
     }
 
