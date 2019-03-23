@@ -127,5 +127,25 @@ class Auth
         self::$has_session_expired = false;
         }
     
+    /**
+     *  CSRF Token generator
+     */
+    static function generateToken( $formName ) 
+    {
+        $secretKey = 'gsfhs154aergz2#';
+        if ( !session_id() ) {
+            session_start();
+        }
+        $sessionId = session_id();
+    
+        return sha1( $formName.$sessionId.$secretKey );
+    
+    }
+
+    // Check CSRF Token
+    static function checkToken( $token, $formName ) 
+    {
+        return $token === generateToken( $formName );
+    }
 
 }

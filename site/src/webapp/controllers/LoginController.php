@@ -43,10 +43,16 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        /**
-         *  Testing CSRF
-         * 
-         */
+        if ( !empty( $_POST['csrf_token'] ) ) {
+
+            if( Auth::checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
+                $this->app->flash("info", "CSRF WORKS!");
+            } else {
+                $this->app->flash("info", "NO, CSRF DOES NOT WORK ");
+
+            }
+        
+        }
        
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
