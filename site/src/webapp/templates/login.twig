@@ -8,6 +8,7 @@
 {{ flash.error|raw }} <br />
 
 <form action="" method="POST">
+{{ form_widget(form._token) }}
 
 <label>Username: </label>
 <input type="text" name="username" value ={{username}} > <br />
