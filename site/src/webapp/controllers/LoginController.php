@@ -42,19 +42,20 @@ class LoginController extends Controller
         #TODO: check if a user has a secret key, if so, must enter the auth code
 
 
-
         $request = $this->app->request;
 
-        $test = $request->request->post('csrf_token');
-        echo "test: {$test}";
+        if ( !empty( $_POST['csrf_token'] ) ) {
 
-        if ($this->isCsrfTokenValid('protectedForm', $test)) {
-            echo "CSRF WORKS!";
+            if( checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
+                echo "CSRF WORKS!";
 
-        } else {
-            echo "NO, CSRF DOES NOT WORK";
+            } else { 
+                echo "NO, CSRF DOES NOT WORK";
 
-        }
+            }
+        
+        } // end if
+
 
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
