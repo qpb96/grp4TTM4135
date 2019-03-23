@@ -145,7 +145,7 @@ class Auth
     // Check CSRF Token
     static function checkToken( $token, $formName ) 
     {
-        return $token === generateToken( $formName );
+        return $token === $this->generateToken( $formName );
     }
 
 }
