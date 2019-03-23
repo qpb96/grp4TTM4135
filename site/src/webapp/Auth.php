@@ -139,8 +139,6 @@ class Auth
           #  session_start();
         }
         $sessionId = session_id();
-        $test23 = sha1( $formName.$secretKey );
-        echo "checking token: {$test23}";
 
         return sha1( $formName.$secretKey );
     
