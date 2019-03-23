@@ -43,14 +43,11 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        $submittedToken = $request->request->get('token');
-
-        if ($this->isCsrfTokenValid('authenticate', $submittedToken)) {
-            $this->app->flash("info", "csrf");
-        } else {
-            $this->app->flash("info", "no csrf");
-        }
-
+        /**
+         *  Testing CSRF
+         * 
+         */
+       
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->get('g-recaptcha'), $request->getIp());
