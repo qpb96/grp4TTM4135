@@ -7,6 +7,8 @@ use ttm4135\webapp\InputValidation;
 use ttm4135\webapp\InputSanitizer;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\Request as r;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class LoginController extends Controller
@@ -43,7 +45,9 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        $test = $request->request->get('token');
+        $test = $request->request->get('_token');
+        echo "test: {$test}";
+
         if ($this->isCsrfTokenValid('some-name', $test)) {
             echo "CSRF WORKS!";
 
@@ -52,20 +56,6 @@ class LoginController extends Controller
 
         }
 
-        /*
-
-        if ( !empty( $_POST['csrf_token'] ) ) {
-            echo "p__p";
-
-            if( Auth::checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
-                echo "CSRF WORKS!";
-            } else {
-                echo "NO, CSRF DOES NOT WORK";
-
-            }
-        
-        }
-        */
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->get('g-recaptcha'), $request->getIp());
@@ -143,6 +133,6 @@ class LoginController extends Controller
         Auth::resetSessionExpired();
         $this->app->flash('info', 'Your session has expired. Please log in again.');
         $this->app->redirect('/login');
-        }
-
+        } 
+    
 }
