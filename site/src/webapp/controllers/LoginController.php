@@ -46,9 +46,9 @@ class LoginController extends Controller
         if ( !empty( $_POST['csrf_token'] ) ) {
 
             if( Auth::checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
-                $this->app->flash("info", "CSRF WORKS!");
+                echo "CSRF WORKS!";
             } else {
-                $this->app->flash("info", "NO, CSRF DOES NOT WORK ");
+                echo "NO, CSRF DOES NOT WORK";
 
             }
         
