@@ -43,7 +43,17 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
-        $test = $_POST['csrf_token'];
+        $test = $request->request->get('token');
+        if ($this->isCsrfTokenValid('some-name', $test)) {
+            echo "CSRF WORKS!";
+
+        } else {
+            echo "NO, CSRF DOES NOT WORK";
+
+        }
+
+        /*
+
         if ( !empty( $_POST['csrf_token'] ) ) {
             echo "p__p";
 
@@ -55,7 +65,7 @@ class LoginController extends Controller
             }
         
         }
-       
+        */
 
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->get('g-recaptcha'), $request->getIp());
