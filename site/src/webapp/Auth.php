@@ -147,6 +147,7 @@ class Auth
     // Check CSRF Token
     static function checkToken( $token, $formName ) 
     {
+        echo "checking token: {$token}";
         return $token === self::generateToken( $formName );
     }
 
