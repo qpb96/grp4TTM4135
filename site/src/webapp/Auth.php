@@ -132,6 +132,8 @@ class Auth
      */
     static function generateToken( $formName ) 
     {
+        echo "token generated ...";
+
         $secretKey = 'gsfhs154aergz2#';
         if ( !session_id() ) {
             session_start();
