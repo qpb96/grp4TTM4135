@@ -43,12 +43,13 @@ class LoginController extends Controller
 
         $request = $this->app->request;
 
+        $test = $_POST['csrf_token'];
         if ( !empty( $_POST['csrf_token'] ) ) {
 
             if( Auth::checkToken( $_POST['csrf_token'], 'protectedForm' ) ) {
                 echo "CSRF WORKS!";
             } else {
-                echo "NO, CSRF DOES NOT WORK";
+                echo "NO, CSRF DOES NOT WORK [ {$test} ]";
 
             }
         
