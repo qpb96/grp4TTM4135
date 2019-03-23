@@ -26,6 +26,8 @@ class LoginController extends Controller
             $this->app->flash('info', 'You are already logged in as ' . $username);
             $this->app->redirect('/');
         } else {
+            $test = $_POST['csrf_token'];
+            echo "is it in index?: {$test}";
 		if (isset($_COOKIE["username"])){
 			$username = $_COOKIE["username"];
 		} else {
