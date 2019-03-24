@@ -4,10 +4,8 @@ namespace ttm4135\webapp\controllers;
 
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
-use ttm4135\webapp\InputValidation;
-use ttm4135\webapp\InputSanitizer;
 
-
+header('X-Frame-Options: DENY');
 
 class UserController extends Controller
 {
