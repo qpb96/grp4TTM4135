@@ -125,7 +125,7 @@ class UserController extends Controller
             $isAdmin = ($request->post('isAdmin') != null);
 
 	    if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
+            && $validation->passwordRequirement($password))
             {
 
                 $user->setUsername($username);
@@ -148,9 +148,6 @@ class UserController extends Controller
                      contain at least 1 number,
                      contain at least one uppercase character,
                      and contain at least one lowercase character.');
-
-                } else if(!$validation->usernameRequirement($username)){
-                    $this->app->flashNow('info', 'Name is already taken or contain over 20 characters');
 
                 } else if (!$validation->isValidEmail($email)){
                     $this->app->flashNow('info', 'Email contains over 30 characters or is not valid. Please try again.');
