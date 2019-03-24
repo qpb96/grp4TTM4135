@@ -10,13 +10,15 @@
     <div>
         <p> ACCOUNT HAS BEEN CREATED </p>
         <p>Scan this QR using <strong>Google Authenticator</strong> app to synchronize your phone with our platform.</p>
-        <p> WATNING: If you skip this step, you won't be able to set an authenticator to your account!. </p>
+        <p> WARNING: If you skip this step, you won't be able to set an authenticator to your account!. </p>
         <p align='center'><img src="{{ url }}" about='QR auth code'></p>
     </div>
 {% endif %}
 
+{{ flash.error|escape }} <br />
+
 <form action="" method="POST">
-    <div>    
+    <div>
     <p><strong>Auth code:</strong><br>
     <input type="text" name="code">
     </div>

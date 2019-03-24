@@ -4,6 +4,8 @@ namespace ttm4135\webapp\controllers;
 
 use ttm4135\webapp\models\User;
 use ttm4135\webapp\Auth;
+use ttm4135\webapp\InputValidation;
+use ttm4135\webapp\InputSanitizer;
 
 header('X-Frame-Options: DENY');
 
@@ -41,7 +43,7 @@ class UserController extends Controller
         $validation = new InputValidation();
 
         if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->isValidUserName($username) && $validation->passwordRequirement($password))
+            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
             {
                 $user = User::makeEmpty();
                 $user->setUsername($username);
@@ -60,11 +62,11 @@ class UserController extends Controller
 
                 if(!$validation->passwordRequirement($password)){
                     $this->app->flash('error', 'Password must be a minimum of 8 characters,
-                    \n contain at least 1 number,
-                    \n	contain at least one uppercase character,
-                    \n	and contain at least one lowercase character.');
+                    	contain at least 1 number,
+                    	contain at least one uppercase character,
+                    	and contain at least one lowercase character.');
 
-                } else if(!$validation->isValidUserName($username)){
+                } else if(!$validation->usernameRequirement($username)){
                     $this->app->flash('error', 'Name is already taken or contain over over 20 characters');
 
                 } else{
@@ -97,6 +99,9 @@ class UserController extends Controller
     {
 
         $user = User::findById($tuserid);
+	$validation = new InputValidation();
+
+
 
         if (! $user) {
             throw new \Exception("Unable to fetch logged in user's object from db.");
@@ -115,20 +120,46 @@ class UserController extends Controller
 
             $isAdmin = ($request->post('isAdmin') != null);
 
+	    if($validation->isValidEmail($email) && $validation->isValidBio($bio)
+            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
+            {
 
-            $user->setUsername($username);
-            $user->setPassword($password_hashed);
-            $user->setBio($bio);
-            $user->setEmail($email);
-            $user->setIsAdmin($isAdmin);
+                $user->setUsername($username);
+                $user->setPassword($password_hashed);
+                $user->setBio($bio);
+                $user->setEmail($email);
+                $user->setIsAdmin($isAdmin);
 
-            $user->save();
-            $this->app->flashNow('info', 'Your profile was successfully saved.');
+                $user->save();
+                $this->app->flashNow('info', 'Your profile was successfully saved.');
 
-            $user = User::findById($tuserid);
 
-            $this->render('showuser.twig', ['user' => $user]);
+            	$user = User::findById($tuserid);
+           	$this->render('showuser.twig', ['user' => $user]);
+	    
+	    } else { 
 
+                if(!$validation->passwordRequirement($password)){
+                    $this->app->flashNow('info', 'Password must be a minimum of 8 characters,
+                     contain at least 1 number,
+                     contain at least one uppercase character,
+                     and contain at least one lowercase character.');
+
+                } else if(!$validation->usernameRequirement($username)){
+                    $this->app->flashNow('info', 'Name is already taken or contain over over 20 characters');
+
+                } else if (!$validation->isValidEmail($email)){
+                    $this->app->flashNow('info', 'Email is not valid. Please try again.');
+
+                } else {
+                    $this->app->flashNow('info', 'Invalid input field.');
+
+		}
+		$user = User::findById($tuserid);
+           	$this->render('showuser.twig', ['user' => $user]);
+
+            }
+	
 
         } else {
             $username = $user->getUserName();

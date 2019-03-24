@@ -17,24 +17,25 @@
                 <a href="/"> Home</a></br />
                 <br>
                 {% if isLoggedIn %}
-                    Logged in as {{ loggedInUsername|raw }} {{user.id}}.<br>
+                    Logged in as {{ loggedInUsername|escape }} {{user.id}}.<br>
                     {% if isAdmin %}
                         <a href="/admin">Admin section</a> <br>
                     {% endif %}
                     <a href="/user/edit/{{user.id}}"> {{loggedInUsername}} </a> <br>
                     <a href="/logout">Log out</a> <br>
+                    <a href="/help">Help</a> <br>
                 {% else %}
                     <a href="/register">Create user</a> <br />
                     <a href="/login">Login</a> <br>
                     <a href="/help">Help</a> <br>
-                    
+
                 {% endif %}
 
 
 
             </div>
             <div id="content">
-                <div id="flashinfo">{{ flash.info|raw }}</div>
+                <div id="flashinfo">{{ flash.info|escape }}</div>
 
 
                 {% block content %}
@@ -42,13 +43,13 @@
                 {% if isLoggedIn %}
                 <h2> Hi {{loggedInUsername}}! </h2>
                 <h4> We hope that you will find something interesting! <h4>
-                <img src="/images/jk.jpg" alt="KEK">
+                <img src="/images/jk1.jpg" alt="KEK">
                 {% else %}
                 <h2>  Please log in to see more of this awesome website! </h2>
                 <img src="/images/OWASP.png" alt="KEK">
                 {% endif %}
-                
-                
+
+
                 {% endblock %}
 
 
