@@ -67,9 +67,13 @@ class UserController extends Controller
                     	and contain at least one lowercase character.');
 
                 } else if(!$validation->usernameRequirement($username)){
-                    $this->app->flash('error', 'Name is already taken or contain over over 20 characters');
+                    $this->app->flash('error', 'Name is already taken or contain over 20 characters');
 
-                } else{
+		}else if (!$validation->isValidEmail($email)){
+                    $this->app->flash('error', 'Email contains over 30 characters or is not valid. Please try again.');
+                }  
+		
+		else{
                     $this->app->flash('error', 'Invalid input field.');
 
                 }
@@ -121,7 +125,7 @@ class UserController extends Controller
             $isAdmin = ($request->post('isAdmin') != null);
 
 	    if($validation->isValidEmail($email) && $validation->isValidBio($bio)
-            && $validation->usernameRequirement($username) && $validation->passwordRequirement($password))
+            && $validation->passwordRequirement($password))
             {
 
                 $user->setUsername($username);
@@ -145,11 +149,8 @@ class UserController extends Controller
                      contain at least one uppercase character,
                      and contain at least one lowercase character.');
 
-                } else if(!$validation->usernameRequirement($username)){
-                    $this->app->flashNow('info', 'Name is already taken or contain over over 20 characters');
-
                 } else if (!$validation->isValidEmail($email)){
-                    $this->app->flashNow('info', 'Email is not valid. Please try again.');
+                    $this->app->flashNow('info', 'Email contains over 30 characters or is not valid. Please try again.');
 
                 } else {
                     $this->app->flashNow('info', 'Invalid input field.');
