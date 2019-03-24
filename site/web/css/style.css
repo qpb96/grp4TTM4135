@@ -22,8 +22,8 @@ a:active {
     background-color: black;
     color: white;
 }
-input[type=submit] {
-  text-align:center;
+form {
+  text-align: center;
 }
 
 #logo {
