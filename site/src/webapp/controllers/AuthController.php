@@ -75,7 +75,7 @@ class AuthController extends Controller
        # $user->setTempAuth($auth_key, $auth_url);
        #TODO add secret key to database
 
-        $this->render('auth.twig', ['url'=>$auth_url]);
+        $this->render('auth.twig', ['url'=>$auth_url, 'user' =>$user]);
  
     }
 
