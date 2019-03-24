@@ -71,7 +71,7 @@ class AuthController extends Controller
         $_SESSION['secret_key'] = $secret_key;
         $qrImageGenerator = new GoogleAuthenticator\QrImageGenerator\GoogleQrImageGenerator();
         $auth_url = $qrImageGenerator->generateUri($secret);
-        echo $_SESSION['secret_key'];
+
        # $user->setTempAuth($auth_key, $auth_url);
        #TODO add secret key to database
 
@@ -82,7 +82,7 @@ class AuthController extends Controller
     function auth(){
         #$username = $_SESSION['username'];
         #$user = User::findByUser($username);
-        echo $_SESSION['userid'];
+
         $uid = $_SESSION['userid'];
         $request = $this->app->request;
         $input_sanitizer = new InputSanitizer($request);
@@ -92,7 +92,7 @@ class AuthController extends Controller
         $is_valid_auth = $googleAuth->authenticate($secret_key, $code);
 
         if(!$is_valid_auth){
-            $this->app->flash("info", "Invalid code");
+            $this->app->flash("error", "Invalid code");
             $this->app->redirect("/login/auth");
             
         }
