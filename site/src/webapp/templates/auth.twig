@@ -1,0 +1,32 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+{{ flash.error }} <br>
+
+<h2>Authentification</h2>
+
+{% if url != null %}
+    <div>
+        <p> ACCOUNT HAS BEEN CREATED </p>
+        <p>Scan this QR using <strong>Google Authenticator</strong> app to synchronize your phone with our platform.</p>
+        <p> WATNING: If you skip this step, you won't be able to set an authenticator to your account!. </p>
+        <p align='center'><img src="{{ url }}" about='QR auth code'></p>
+    </div>
+{% endif %}
+
+<form action="" method="POST">
+    <div>    
+    <p><strong>Auth code:</strong><br>
+    <input type="text" name="code">
+    </div>
+    <input type="submit" name="submit" value="Confirm">
+</form>
+
+<br>
+<p align='center'>
+<a href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img src='https://storage.googleapis.com/support-kms-prod/D90D94331E54D2005CC8CEE352FF98ECF639' width='200' height='60'/></a>
+
+<a href='https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8'><img src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="" width='180' height='60'></a>
+</p>
+{% endblock %}
