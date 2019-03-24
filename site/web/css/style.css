@@ -22,6 +22,9 @@ a:active {
     background-color: black;
     color: white;
 }
+input[type=submit] {
+  text-align:center;
+}
 
 #logo {
     background-color: #EDEDED;
