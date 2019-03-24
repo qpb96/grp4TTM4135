@@ -5,7 +5,7 @@ use ttm4135\webapp\Auth;
 
 $templatedir =  __DIR__.'/webapp/templates/';
 $app = new \Slim\Slim([
-    'debug' => true,
+    'debug' => false,
     'templates.path' => $templatedir,
     'view' => new \Slim\Views\Twig($templatedir
   )
@@ -15,7 +15,7 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
 );
 $view->parserOptions = array(
-    'debug' => true
+    'debug' => false
 );
 
 
@@ -42,8 +42,8 @@ if(Auth::isSessionExpired()){
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
 
 $app->get('/',     $ns . 'HomeController:index');             //front page            <all site visitors>
-$app->get('/help',     $ns . 'HomeController:help');      
-$app->post('/help',     $ns . 'HomeController:help_sent');          
+$app->get('/help',     $ns . 'HomeController:help');
+$app->post('/help',     $ns . 'HomeController:help_sent');
 
 
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
@@ -72,7 +72,7 @@ $app->post('/admin/deleteMultiple', $ns . 'AdminController:deleteMultiple');    
 $app->get('/admin/edit/:userid',    $ns . 'AdminController:show');       //add user userid          <staff and group members>
 $app->post('/admin/edit/:userid',   $ns . 'AdminController:edit');       //add user userid          <staff and group members>
 $app->get('/admin/create',    $ns . 'AdminController:create');       //add user userid          <staff and group members>
-$app->post('/admin/create',   $ns . 'AdminController:newuser');       //add user userid          <staff and group members> 
+$app->post('/admin/create',   $ns . 'AdminController:newuser');       //add user userid          <staff and group members>
 
 
 

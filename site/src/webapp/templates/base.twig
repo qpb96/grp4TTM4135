@@ -17,7 +17,7 @@
                 <a href="/"> Home</a></br />
                 <br>
                 {% if isLoggedIn %}
-                    Logged in as {{ loggedInUsername|escape }} {{user.id}}.<br>
+                    Logged in as {{ loggedInUsername|escape }}.<br>
                     {% if isAdmin %}
                         <a href="/admin">Admin section</a> <br>
                     {% endif %}
