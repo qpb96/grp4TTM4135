@@ -42,7 +42,7 @@ if(Auth::isSessionExpired()){
 /// app->(GET/POST) (URL, $ns . CONTROLLER);    // description..   <who has access>
 
 $app->get('/',     $ns . 'HomeController:index');             //front page            <all site visitors>
-$app->post('/help',     $ns . 'HomeController:help');             
+$app->get('/help',     $ns . 'HomeController:help');             
 
 
 $app->get( '/login', $ns . 'LoginController:index');        //login form            <all site visitors>
