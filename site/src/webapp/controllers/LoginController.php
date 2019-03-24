@@ -75,7 +75,7 @@ class LoginController extends Controller
                             else{
                                 //Set session when user logs in
                                 UserController::setCookieUsername($username);
-                                echo $uid;
+
                                 Auth::login($user->getId());
                                 $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
                                 $this->app->redirect('/');
@@ -87,8 +87,7 @@ class LoginController extends Controller
                         }
                         }
                     else{
-                        print($username);
-                        print($password);
+
                         $this->app->flash("error", "Invalid input in username or password");
                         $this->render('login.twig', []);
                     }

@@ -33,6 +33,11 @@ class HomeController extends Controller
      $this->render('help.twig', []);
     }
 
+    function help_sent()
+    {
+     $this->flash("info","Message sent!");   
+     $this->redirect("/");
+    }
        
     
 

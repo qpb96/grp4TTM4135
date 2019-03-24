@@ -24,7 +24,7 @@ class AuthController extends Controller
             Auth::resetSessionExpired();
             $_SESSION['temp_uid'] = $userid;
             $this->app->render('login_auth.twig',['username' => $username]);
-            echo $_SESSION['temp_uid'];
+
         }
         else{
             $this->app->redirect("/");
