@@ -22,9 +22,6 @@ a:active {
     background-color: black;
     color: white;
 }
-/* form {
-  text-align: center;
-} */
 
 #logo {
     background-color: #EDEDED;
@@ -50,7 +47,6 @@ a:active {
     min-height: 200px;
     max-width: 700px;
     margin: 0 auto 2em;
-    text-align: center;
 }
 
 input:focus {
