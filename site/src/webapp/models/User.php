@@ -241,6 +241,20 @@ class User
     }
 
 
+    public static function all()
+    {
+        $stmt = self::$app->db->prepare("SELECT * FROM users");
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        $users = [];
+        foreach ($results as $row) {
+            $user = User::makeFromSql($row);
+            array_push($users, $user);
+        }
+        return $users;
+    }
+
+
     static function makeFromSql($row)
     {
         return User::make(
