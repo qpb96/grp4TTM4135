@@ -35,8 +35,8 @@ class HomeController extends Controller
 
     function help_sent()
     {
-     echo "Message sent!"; 
-     $this->redirect("/");
+    $this->app->flash("info", "Message sent!");
+     $this->app->redirect('/');
     }
        
     
