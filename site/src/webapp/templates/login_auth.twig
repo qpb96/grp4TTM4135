@@ -1,0 +1,15 @@
+{% block content %}
+<h2>Verify</h2>
+
+{{ flash.error|raw }} <br />
+
+<form action="" method="POST">
+    <div>    
+    <p><strong>Auth code for:</strong><br>
+    <input type="text" name="username" value={{username}} readonly>
+    <input type="text" name="code" placeholder="Auth code">
+    </div>
+    <input type="submit" name="submit" value="Confirm">
+</form>
+
+{% endblock %}

@@ -14,7 +14,7 @@ class Sql
      * Create tables.
      */
     static function up() {
-        $q1 = "CREATE TABLE users (id INTEGER PRIMARY KEY, username VARCHAR(50), password VARCHAR(50), email varchar(50),  bio varhar(50), isadmin INTEGER);";
+        $q1 = "CREATE TABLE users (id INTEGER PRIMARY KEY, username VARCHAR(50), password VARCHAR(255), email varchar(50),  bio varhar(50), isadmin INTEGER, auth_key VARCHAR(54));";
 
         self::$pdo->exec($q1);
 
@@ -25,9 +25,10 @@ class Sql
 
     static function insertDummyUsers() {
 
-
-        $q1 = "INSERT INTO users(username, password, isadmin) VALUES ('admin', 'admin', 1)";
-        $q2 = "INSERT INTO users(username, password) VALUES ('bob', 'bob')";
+	$admin_hashed = password_hash('admin', PASSWORD_DEFAULT);
+	$bob_hashed = password_hash('bob', PASSWORD_DEFAULT);
+        $q1 = "INSERT INTO users(username, password, isadmin) VALUES ('admin','$admin_hashed', 1)";
+        $q2 = "INSERT INTO users(username, password) VALUES ('bob', '$bob_hashed')";
 
         self::$pdo->exec($q1);
         self::$pdo->exec($q2);

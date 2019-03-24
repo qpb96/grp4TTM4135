@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="/css/style.css"/>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
 
         {% set titleVar = 'Group4 Website' %}
 
@@ -16,14 +17,17 @@
                 <a href="/"> Home</a></br />
                 <br>
                 {% if isLoggedIn %}
-                    Logged in as {{ loggedInUsername|raw }}.<br>
+                    Logged in as {{ loggedInUsername|raw }} {{user.id}}.<br>
                     {% if isAdmin %}
                         <a href="/admin">Admin section</a> <br>
                     {% endif %}
+                    <a href="/user/edit/{{user.id}}"> {{loggedInUsername}} </a> <br>
                     <a href="/logout">Log out</a> <br>
                 {% else %}
                     <a href="/register">Create user</a> <br />
                     <a href="/login">Login</a> <br>
+                    <a href="/help">Help</a> <br>
+                    
                 {% endif %}
 
 
@@ -34,11 +38,14 @@
 
 
                 {% block content %}
-                <h1>Main page!<h2>
+                <h1>WELCOME TO GROUP4 !<h2>
                 {% if isLoggedIn %}
-                <h2> Private face </h2>
+                <h2> Hi {{loggedInUsername}}! </h2>
+                <h4> We hope that you will find something interesting! <h4>
+                <img src="/images/jk.jpg" alt="KEK">
                 {% else %}
-                <h2> Public face </h2>
+                <h2>  Please log in to see more of this awesome website! </h2>
+                <img src="/images/OWASP.png" alt="KEK">
                 {% endif %}
                 
                 
@@ -49,7 +56,7 @@
         </div>
 
         <div id="footer">
-            {% block footer %}here be footer{% endblock %}
+            {% block footer %}Made by group 4{% endblock %}
         </div>
     </body>
 </html>
