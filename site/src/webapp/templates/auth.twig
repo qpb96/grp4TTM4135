@@ -15,10 +15,10 @@
     </div>
 {% endif %}
 
-{{ flash.error|raw }} <br />
+{{ flash.error|escape }} <br />
 
 <form action="" method="POST">
-    <div>    
+    <div>
     <p><strong>Auth code:</strong><br>
     <input type="text" name="code">
     </div>
